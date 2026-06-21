@@ -1,0 +1,890 @@
+[
+  {
+    "id": "url-shortener",
+    "title": "URL Shortener",
+    "description": "Design a service that generates short URLs and redirects users to the original long URLs.",
+    "statement": "Design a URL shortening service like bit.ly or TinyURL.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How users submit long URLs and receive short URLs\n- How the system handles redirection from short to long URLs\n- Your choice of database(s) and what they store\n- Any APIs or services your system exposes\n\nFocus on the core functionality first. We'll explore scalability, performance, and edge cases in follow-up questions.",
+    "category": "Getting Started",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "image-sharing-service",
+    "title": "Image Sharing Service",
+    "description": "Design a platform where users can upload, store, and share images with metadata like captions and tags.",
+    "statement": "Design an image sharing service like Instagram or Imgur.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How users upload images to the service\n- Where and how images are stored (blob storage)\n- How users view and retrieve images\n- Your choice of database(s) for metadata (captions, tags, user info)\n- Basic API endpoints your service exposes\n\nFocus on core upload/storage/retrieval functionality. We'll explore image processing, CDNs, and scaling in follow-up questions.",
+    "category": "Getting Started",
+    "difficulty": "Medium",
+    "companies": [
+      "Meta"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "notification-service",
+    "title": "Notification Service",
+    "description": "Design a service that sends notifications to users across multiple channels like email, SMS, and push notifications.",
+    "statement": "Design a notification service like Twilio or OneSignal.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How applications request notifications to be sent\n- Support for multiple channels (email, SMS, push notifications)\n- How you route notifications to the appropriate channel\n- Your choice of database(s) and what they store\n- How you track delivery status and handle failures\n\nFocus on core notification delivery. We'll explore user preferences, templates, and scaling in follow-up questions.",
+    "category": "Getting Started",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "recommendation-system",
+    "title": "Recommendation System",
+    "description": "Design a personalized recommendation engine that suggests content to users based on their behavior and preferences.",
+    "statement": "Design a recommendation system like Netflix or Spotify.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How user interactions (clicks, views, ratings) are collected and processed\n- Your approach to generating recommendations (collaborative filtering, content-based, hybrid)\n- Your choice of database(s) for user profiles, item catalogs, and interaction data\n- How recommendations are computed and served to users\n- Whether you'll use batch or real-time processing\n\nFocus on core recommendation functionality. We'll explore cold start problems, A/B testing, and model retraining in follow-up questions.",
+    "category": "Machine Learning",
+    "difficulty": "Medium",
+    "companies": [
+      "Netflix",
+      "Spotify"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "search-ranking-system",
+    "title": "Search Ranking System",
+    "description": "Design an ML-powered search system that ranks and returns relevant results based on user queries.",
+    "statement": "Design a search ranking system like Google Search or Amazon Product Search.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How search queries are processed and matched against indexed content\n- How you'll rank results using ML models (relevance scoring)\n- Your choice of database(s) and search indexes\n- How you handle personalization and context\n- Your approach to model training and feature engineering\n\nFocus on core search and ranking functionality. We'll explore query understanding, learning to rank, and real-time updates in follow-up questions.",
+    "category": "Machine Learning",
+    "difficulty": "Medium",
+    "companies": [
+      "Google",
+      "Amazon"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "fraud-detection-system",
+    "title": "Fraud Detection System",
+    "description": "Design a real-time ML system that detects and prevents fraudulent transactions with low latency.",
+    "statement": "Design a fraud detection system like Stripe Radar or PayPal's fraud prevention.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How transactions are scored in real-time (milliseconds)\n- Your ML model architecture and feature engineering approach\n- Your choice of database(s) for storing transaction history and patterns\n- How you handle model updates and retraining with new fraud patterns\n- Your strategy for balancing false positives vs. false negatives\n\nFocus on core real-time detection functionality. We'll explore rule engines, ensemble models, and feedback loops in follow-up questions.",
+    "category": "Machine Learning",
+    "difficulty": "Medium",
+    "companies": [
+      "Stripe"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "ml-training-platform",
+    "title": "Model Training and Serving Platform",
+    "description": "Design an MLOps platform for training, deploying, and serving machine learning models at scale.",
+    "statement": "Design a model training and serving platform like AWS SageMaker or Google Vertex AI.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How users submit training jobs with datasets and hyperparameters\n- Your distributed training infrastructure and resource allocation\n- Where and how trained models are stored and versioned\n- How models are deployed and served for online/batch predictions\n- Your choice of database(s) for experiment tracking and metadata\n\nFocus on core training and serving infrastructure. We'll explore model monitoring, A/B testing deployments, and auto-scaling in follow-up questions.",
+    "category": "Machine Learning",
+    "difficulty": "Medium",
+    "companies": [
+      "Google",
+      "Meta",
+      "Amazon"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "social-media-feed",
+    "title": "Social Media Feed",
+    "description": "Design a social media platform that displays personalized feeds of posts from users you follow.",
+    "statement": "Design a social media feed system like BlueSky or Threads.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How users create and publish posts\n- How users follow other users\n- How the system generates a personalized feed for each user\n- Your choice of database(s) and what they store\n- Any APIs or services your system exposes\n\nFocus on the core feed functionality. We'll explore ranking algorithms, scalability, and real-time updates in follow-up questions.",
+    "category": "Data-Intensive Systems",
+    "difficulty": "Medium",
+    "companies": [
+      "Meta"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "web-crawler",
+    "title": "Web Crawler",
+    "description": "Design a distributed web crawler that discovers, fetches, and indexes web pages across the internet.",
+    "statement": "Design a web crawler system like Googlebot or Ahrefs.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How the crawler discovers and queues URLs to visit\n- How pages are fetched, parsed, and processed\n- Your choice of database(s) and what they store\n- How you prevent duplicate crawling of the same URLs\n- Any politeness policies (rate limiting, robots.txt)\n\nFocus on the core crawling mechanism. We'll explore distributed crawling, scalability, and content extraction in follow-up questions.",
+    "category": "Data-Intensive Systems",
+    "difficulty": "Medium",
+    "companies": [
+      "Google"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "real-time-analytics",
+    "title": "Real-Time Analytics System",
+    "description": "Design a system that collects, processes, and visualizes user behavior analytics from websites and applications in real-time.",
+    "statement": "Design a real-time analytics system like Google Analytics or Adobe Analytics.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How events are collected from websites/apps and ingested into the system\n- How events are processed and aggregated\n- Your choice of database(s) and what they store\n- How users query and visualize metrics/reports\n- Real-time vs. batch processing components\n\nFocus on core analytics functionality. We'll explore scalability, data accuracy, and advanced features in follow-up questions.",
+    "category": "Data-Intensive Systems",
+    "difficulty": "Medium",
+    "companies": [
+      "Google"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "distributed-cache",
+    "title": "Distributed Cache",
+    "description": "Design a high-performance distributed caching system that stores key-value pairs in memory across multiple nodes.",
+    "statement": "Design a distributed cache system like Redis or Memcached.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How clients store and retrieve key-value pairs\n- Your cache eviction policy (what happens when memory is full)\n- How data is distributed across multiple cache nodes\n- Data structures you'll support (strings, lists, sets, etc.)\n- Whether and how you'll handle persistence\n\nFocus on the core caching functionality. We'll explore replication, consistency, and failure handling in follow-up questions.",
+    "category": "Data-Intensive Systems",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "workflow-orchestration",
+    "title": "Workflow Orchestration System",
+    "description": "Design a system that schedules and executes complex workflows with task dependencies and state management.",
+    "statement": "Design a workflow orchestration system like Airflow or Temporal.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How users define workflows and task dependencies (DAGs)\n- How tasks are scheduled and executed by workers\n- Your choice of database(s) for workflow state and metadata\n- How you handle task failures and retries\n- How users monitor workflow execution and view logs\n\nFocus on core orchestration functionality. We'll explore distributed execution, backfilling, and advanced scheduling in follow-up questions.",
+    "category": "Data-Intensive Systems",
+    "difficulty": "Medium",
+    "companies": [
+      "Meta"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "image-board",
+    "title": "Image Board",
+    "description": "Design a visual discovery platform with infinite scrolling, collections, and image interactions.",
+    "statement": "Design a front-end system for an **image board application** where users can browse, save, and organize visual content.\n\nYour design should support:\n- Displaying thousands of images efficiently\n- User interactions (saving, organizing into collections)\n- Infinite scrolling and search\n- Real-time updates when content changes\n\n**Draw a diagram** showing your key UI components, state management approach, data flow, and storage strategy. Label the connections between components and **describe** how your system handles image loading, user actions, and performance optimization.",
+    "category": "Front-End Systems",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "project-management-tools",
+    "title": "Project Management Tools",
+    "description": "Design a collaborative workspace with tasks, boards, and real-time updates.",
+    "statement": "Design a front-end system for a **project management application** where teams collaborate on tasks and projects.\n\nYour design should support:\n- Organizing tasks across multiple views (boards, lists, calendars)\n- Drag-and-drop interactions with immediate feedback\n- Real-time collaboration with multiple users\n- Complex nested data (projects \u2192 lists \u2192 tasks \u2192 subtasks)\n- Filtering, searching, and permissions\n\n**Draw a diagram** showing your state management strategy, data synchronization approach, and how UI updates propagate. Label data flows and **describe** how your system handles concurrent edits, optimistic updates, and state consistency.",
+    "category": "Front-End Systems",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "email-client",
+    "title": "Email client",
+    "description": "Design a responsive email interface with threading, folders, composition, and sync.",
+    "statement": "Design a front-end system for an **email client** where users manage large volumes of messages and conversations.\n\nYour design should support:\n- Displaying and navigating thousands of emails efficiently\n- Multiple views (inbox, folders, labels, search results)\n- Composing emails with drafts and auto-save\n- Read/unread states and bulk actions\n- Real-time syncing of new messages\n- Offline access and conflict resolution\n\n**Draw a diagram** showing your state management architecture, caching strategy, and data synchronization. Label data flows and **describe** how your system handles state updates, optimistic UI changes, and maintaining consistency across views.",
+    "category": "Front-End Systems",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "chat-application",
+    "title": "Chat Application",
+    "description": "Design a real-time chat application supporting one-on-one and group messaging with message history.",
+    "statement": "Design a chat application like WhatsApp or Slack.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How users send and receive messages in real-time\n- Support for one-on-one and group conversations\n- How messages are stored and retrieved (message history)\n- Your choice of database(s) and what they store\n- How you handle online/offline status\n\nFocus on core messaging functionality. We'll explore scalability, message delivery guarantees, and features like read receipts in follow-up questions.",
+    "category": "Communication and Messaging",
+    "difficulty": "Medium",
+    "companies": [
+      "Meta",
+      "Slack"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "video-conferencing",
+    "title": "Video Conferencing System",
+    "description": "Design a video conferencing platform that enables real-time audio and video communication between multiple participants.",
+    "statement": "Design a video conferencing system like Zoom or Microsoft Teams.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How audio and video streams are transmitted between participants\n- Your architecture for handling multi-party calls\n- How users join/create meetings\n- Your choice of database(s) and what they store\n- Whether you'll use peer-to-peer or server-based streaming\n\nFocus on core video/audio functionality. We'll explore scalability, quality optimization, and features like screen sharing in follow-up questions.",
+    "category": "Communication and Messaging",
+    "difficulty": "Medium",
+    "companies": [
+      "Zoom"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "pubsub-messaging",
+    "title": "Pub/Sub Messaging System",
+    "description": "Design a message broker that enables asynchronous communication between publishers and subscribers using topics or queues.",
+    "statement": "Design a pub/sub messaging system like Kafka or RabbitMQ.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How publishers send messages to topics/queues\n- How subscribers consume messages from topics/queues\n- Your message storage and retention strategy\n- Your choice of database(s) or storage layer\n- How you handle message ordering and delivery guarantees\n\nFocus on core messaging functionality. We'll explore scalability, fault tolerance, and advanced patterns in follow-up questions.",
+    "category": "Communication and Messaging",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "video-streaming-platform",
+    "title": "Video Streaming Platform",
+    "description": "Design a platform that allows users to upload, store, and stream video content with adaptive quality.",
+    "statement": "Design a video streaming platform like Netflix or YouTube.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How videos are uploaded and processed (encoding/transcoding)\n- Where and how video files are stored\n- How users stream videos with adaptive bitrate streaming\n- Your choice of database(s) for metadata (titles, descriptions, user data)\n- How you use CDNs for content delivery\n\nFocus on core video delivery functionality. We'll explore recommendations, live streaming, and global scale in follow-up questions.",
+    "category": "Content Delivery",
+    "difficulty": "Medium",
+    "companies": [
+      "Google",
+      "Meta",
+      "Netflix"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "live-streaming-platform",
+    "title": "Live Streaming Platform",
+    "description": "Design a platform that enables real-time broadcasting of live video content to thousands of concurrent viewers.",
+    "statement": "Design a live streaming platform like Twitch or YouTube Live.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How streamers broadcast live video to your platform\n- How live streams are ingested, processed, and distributed\n- How viewers watch streams with low latency\n- Your choice of database(s) for metadata and chat\n- How you handle transcoding and CDN distribution\n\nFocus on core live streaming delivery. We'll explore chat systems, DVR/rewind, and scaling to millions of viewers in follow-up questions.",
+    "category": "Content Delivery",
+    "difficulty": "Medium",
+    "companies": [
+      "Google",
+      "Meta"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "content-delivery-network",
+    "title": "Content Delivery Network",
+    "description": "Design a globally distributed network that caches and delivers content from edge servers close to end users.",
+    "statement": "Design a content delivery network (CDN) like Cloudflare or Akamai.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How edge servers (POPs) are distributed globally\n- How content is cached at edge locations\n- How users are routed to the nearest edge server\n- Your cache invalidation/purging strategy\n- How origin servers interact with edge servers\n\nFocus on core content caching and delivery. We'll explore cache strategies, anycast routing, and advanced features in follow-up questions.",
+    "category": "Content Delivery",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "payment-processing",
+    "title": "Payment Processing System",
+    "description": "Design a system that processes online payments securely with support for multiple payment methods and currencies.",
+    "statement": "Design a payment processing system like Stripe or PayPal.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How payment requests are initiated and processed\n- Payment flow stages (authorization, capture, settlement)\n- Your choice of database(s) for transaction records\n- How you ensure consistency and handle failures/retries\n- Integration with external payment gateways (banks, card networks)\n\nFocus on core payment processing. We'll explore fraud detection, reconciliation, and idempotency in follow-up questions.",
+    "category": "Transactional Systems",
+    "difficulty": "Medium",
+    "companies": [
+      "Stripe"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "stock-trading-platform",
+    "title": "Stock Trading Platform",
+    "description": "Design a platform that allows users to buy and sell stocks with real-time pricing and order execution.",
+    "statement": "Design a stock trading platform like Robinhood or E*TRADE.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How users place buy and sell orders\n- How orders are matched and executed\n- Your choice of database(s) for portfolios and transaction history\n- How you handle real-time stock price updates\n- How you ensure consistency and prevent issues like overselling\n\nFocus on core trading functionality. We'll explore order types, settlement, and high-frequency trading in follow-up questions.",
+    "category": "Transactional Systems",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "seat-booking-system",
+    "title": "Seat Booking System",
+    "description": "Design a system that allows users to search, select, and book seats for events with concurrency control.",
+    "statement": "Design a seat booking system like Ticketmaster or Fandango.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How users search for events and view available seats\n- How seat selection and reservation works (preventing double-booking)\n- Your choice of database(s) for inventory and bookings\n- How you handle concurrent booking requests with locking\n- The checkout and payment confirmation flow\n\nFocus on core booking functionality. We'll explore scalability, reservation timeouts, and waitlists in follow-up questions.",
+    "category": "Transactional Systems",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "ecommerce-inventory",
+    "title": "E-commerce Inventory Management",
+    "description": "Design a system that tracks product inventory across warehouses and ensures accurate stock levels during orders.",
+    "statement": "Design an e-commerce inventory management system like Amazon or Shopify.\n\n**Your task:** Create a high-level system design diagram and describe the key components. Include:\n\n- How inventory levels are tracked across multiple warehouses\n- How stock is reserved when orders are placed\n- Your choice of database(s) for inventory and orders\n- How you handle concurrent orders and prevent overselling\n- How inventory updates from restocking and returns are processed\n\nFocus on core inventory management. We'll explore warehouse selection strategies, inventory reconciliation, and reserved stock handling in follow-up questions.",
+    "category": "Transactional Systems",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "collaborative-doc-editor",
+    "title": "Collaborative Document Editor",
+    "description": "Design a real-time collaborative document editing system supporting multiple simultaneous users.",
+    "statement": "Design a system that allows multiple users to edit the same document simultaneously with real-time updates.\n\n**Draw and describe** your high-level architecture. Consider:\n- How users see each other's changes instantly\n- How you'll handle conflicting edits\n- What happens when users have poor connectivity\n- How documents are stored and retrieved\n\nIn follow-up steps, we'll explore conflict resolution strategies, operational transformation, presence awareness, and scaling considerations. Focus on the core data flow for now.",
+    "category": "Real-Time and Collaborative Systems",
+    "difficulty": "Medium",
+    "companies": [
+      "Google"
+    ],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "multiplayer-game-server",
+    "title": "Multiplayer Game Server",
+    "description": "Design a low-latency multiplayer game server supporting thousands of concurrent players.",
+    "statement": "Design a system that enables thousands of players to interact in real-time with minimal lag.\n\n**Draw and describe** your high-level architecture. Consider:\n- How you'll keep player actions synchronized across clients\n- Managing game state updates with low latency\n- Handling player disconnections and reconnections\n- Supporting matchmaking and player sessions\n\nIn follow-up steps, we'll explore client-server authority models, lag compensation techniques, state reconciliation, anti-cheat mechanisms, and horizontal scaling. Start with the core gameplay loop.",
+    "category": "Real-Time and Collaborative Systems",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "live-collaborative-whiteboard",
+    "title": "Live Collaborative Whiteboard",
+    "description": "Design an infinite canvas whiteboard supporting real-time collaboration with rich visual elements.",
+    "statement": "Design a system where multiple users can draw, add shapes, and collaborate on an infinite canvas in real-time.\n\n**Draw and describe** your high-level architecture. Consider:\n- How changes to objects are broadcast to all participants\n- Rendering updates efficiently across large canvases\n- Tracking cursor positions and user presence\n- Managing permissions and access control\n- Handling offline edits and synchronization\n\nIn follow-up steps, we'll explore CRDT vs OT approaches, viewport optimization, vector rendering strategies, and conflict-free merging. Focus on the collaborative update flow.",
+    "category": "Real-Time and Collaborative Systems",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "metrics-monitoring-system",
+    "title": "Metrics Monitoring System",
+    "description": "Design a time-series metrics system for monitoring application and infrastructure performance at scale.",
+    "statement": "Design a system that collects, stores, and visualizes millions of metrics per second from distributed applications.\n\n**Draw and describe** your high-level architecture. Consider:\n- How metrics are collected from thousands of hosts/services\n- Storing time-series data efficiently for fast queries\n- Querying and aggregating metrics across dimensions\n- Triggering alerts when thresholds are breached\n- Handling high ingestion rates and data retention\n\nIn follow-up steps, we'll explore time-series databases, cardinality management, downsampling strategies, pull vs push models, and distributed querying. Focus on the ingestion and query path.",
+    "category": "Analytics and Observability",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "distributed-logging-system",
+    "title": "Distributed Logging System",
+    "description": "Design a centralized logging platform for collecting, indexing, and searching logs across distributed systems.",
+    "statement": "Design a system that ingests billions of log events daily from distributed services and enables fast searching and analysis.\n\n**Draw and describe** your high-level architecture. Consider:\n- How logs flow from applications to central storage\n- Indexing structured and unstructured log data\n- Supporting fast full-text search across massive datasets\n- Managing different retention policies per log type\n- Handling burst traffic and backpressure\n\nIn follow-up steps, we'll explore log parsing pipelines, inverted indexes, sharding strategies, schema evolution, and cost optimization through tiered storage. Focus on ingestion and query paths.",
+    "category": "Analytics and Observability",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "distributed-tracing-system",
+    "title": "Distributed Tracing System",
+    "description": "Design a distributed tracing platform to track requests across microservices and identify performance bottlenecks.",
+    "statement": "Design a system that traces requests as they flow through dozens of microservices, capturing latency and dependencies.\n\n**Draw and describe** your high-level architecture. Consider:\n- How trace data is collected from instrumented services\n- Linking related operations across service boundaries\n- Storing and querying trace spans efficiently\n- Sampling strategies to manage data volume\n- Visualizing request paths and identifying bottlenecks\n\nIn follow-up steps, we'll explore context propagation, tail-based sampling, trace aggregation, anomaly detection, and storage optimization. Focus on the trace collection and correlation flow.",
+    "category": "Analytics and Observability",
+    "difficulty": "Hard",
+    "companies": [
+      "Google",
+      "Amazon"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "application-performance-monitoring",
+    "title": "Application Performance Monitoring",
+    "description": "Design an APM system that provides deep visibility into application performance and user experience.",
+    "statement": "Design a system that monitors application health, tracks user transactions, and identifies performance issues in production.\n\n**Draw and describe** your high-level architecture. Consider:\n- How you'll instrument applications to capture performance data\n- Tracking end-to-end transactions across tiers (web, app, database)\n- Detecting anomalies and performance degradation automatically\n- Correlating application metrics with infrastructure health\n- Supporting root cause analysis and code-level diagnostics\n\nIn follow-up steps, we'll explore agent instrumentation, baseline detection, dependency mapping, real user monitoring, and metric aggregation strategies. Focus on data collection and analysis paths.",
+    "category": "Analytics and Observability",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "rate-limiter",
+    "title": "Rate Limiter",
+    "description": "Design a distributed rate limiter that restricts API calls per user across a fleet of API servers.",
+    "statement": "Design a distributed rate limiter that restricts API calls per user. Must work across multiple server instances with sub-millisecond decision latency.\n\n**Scale:** 1M users, each limited to 100 requests/minute. 10 API servers sharing state.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Which rate limiting algorithm you'll use (token bucket, sliding window, fixed window) and why\n- How you share rate limit state across 10 distributed API servers\n- What happens if your central state store goes down (fail open vs fail closed)\n- How clients receive 429 responses with Retry-After headers\n- How you handle burst vs sustained traffic differently\n\nWe'll explore multi-region rate limiting, Redis clustering, and handling clock skew in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "key-value-store",
+    "title": "Distributed Key-Value Store",
+    "description": "Design a distributed key-value store supporting get/put with high availability and tunable consistency.",
+    "statement": "Design a distributed key-value store supporting get(key) and put(key, value) with high availability and tunable consistency.\n\n**Scale:** 10M reads/day, 1M writes/day. Values up to 10KB. P99 read latency < 5ms. 3-node minimum replication.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How you distribute keys across nodes (consistent hashing, virtual nodes)\n- Your replication strategy (N replicas, quorum reads/writes: W+R>N)\n- How you resolve conflicts when two nodes have different values for the same key\n- Your storage engine choice (LSM-tree vs B-tree) and why\n- How a new node joins the cluster and acquires data\n\nWe'll explore vector clocks, Merkle trees for anti-entropy, and gossip protocol in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "twitter-feed",
+    "title": "Twitter/X Timeline",
+    "description": "Design the Twitter home timeline \u2014 show tweets from followed accounts, sorted by time, with 300M MAU.",
+    "statement": "Design the Twitter home timeline \u2014 show tweets from accounts a user follows, sorted by time, paginated.\n\n**Scale:** 300M MAU, 150M DAU. 500M tweets/day (5,787/sec). Average user follows 200 accounts. Celebrities have up to 100M followers. Timeline must load in < 200ms p99.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Fan-out on write vs fan-out on read: trade-offs for each approach\n- How you handle celebrities (100M followers) \u2014 why naive fan-out breaks\n- What a Redis timeline cache looks like (data structure, TTL, what you store)\n- How tweets are stored in the primary database\n- The API design for paginated timeline fetching\n\nWe'll explore the hybrid approach, timeline merging, and media handling in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Twitter"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "notification-system",
+    "title": "Notification System",
+    "description": "Design a notification system supporting email, SMS, and push notifications with guaranteed delivery and priority queues.",
+    "statement": "Design a notification system supporting email, SMS, and push notifications with guaranteed delivery and priority queues.\n\n**Scale:** 10M notifications/day. Critical notifications (OTP, fraud alerts) must deliver in < 5 seconds. Marketing notifications can be delayed up to 24 hours. At-least-once delivery guarantee.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How a notification request flows from the API to delivery across channels\n- How you route to the right channel (email/SMS/push) per user preference\n- How you prevent sending the same notification twice (idempotency)\n- What happens when a push notification provider (FCM, APNS) is temporarily down\n- How OTP notifications bypass the queue for immediate delivery\n\nWe'll explore circuit breakers, dead letter queues, and per-user rate limiting in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "search-autocomplete",
+    "title": "Search Autocomplete / Typeahead",
+    "description": "Design the search suggestion system that shows autocomplete results as a user types, with < 100ms latency.",
+    "statement": "Design the search suggestion system that shows autocomplete results as a user types.\n\n**Scale:** 10M daily active searchers. 10 suggestions returned per prefix. P99 latency < 100ms. Suggestions based on trending searches + personalization. Update suggestions every hour.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Trie vs inverted index for prefix matching \u2014 which scales better and why\n- How you rank suggestions (frequency, trending boost, personalization)\n- How you cache prefix queries to handle 50M prefix lookups/day\n- How often you rebuild the suggestion index and how you handle hot trending searches\n- The pipeline from raw search logs to updated trie\n\nWe'll explore segmenting by language, Bloom filters, and the aggregation pipeline in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Google"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "youtube-netflix",
+    "title": "YouTube / Netflix",
+    "description": "Design a video streaming platform supporting upload, transcoding, and adaptive bitrate streaming to millions of concurrent viewers.",
+    "statement": "Design a video streaming platform supporting upload, transcoding, and adaptive bitrate streaming to millions of concurrent viewers.\n\n**Scale:** 500 hours of video uploaded per minute. 1B videos watched per day. Videos range from 100MB (mobile) to 50GB (4K raw). Global audience \u2014 latency < 2s to start playback.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How a 50GB video upload from a mobile phone on a flaky connection works (chunked upload, resumable)\n- The transcoding pipeline: who handles 500 hours of video per minute at scale\n- CDN strategy: push vs pull, edge node placement\n- Adaptive bitrate streaming (HLS/DASH): how the client decides which quality to request\n- The metadata storage for videos, user watch history, and view counts\n\nWe'll explore shot-based encoding, thumbnail generation, and CDN pre-warming for new releases in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Google",
+      "Meta",
+      "Netflix"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "uber-lyft",
+    "title": "Uber / Swiggy",
+    "description": "Design a ride-sharing platform that matches riders with nearby drivers in real-time with geospatial queries.",
+    "statement": "Design a ride-sharing platform that matches riders with nearby drivers in real-time, handling location updates and surge pricing.\n\n**Scale:** 1M concurrent drivers sending location every 4 seconds. 10M rides/day, peak 200K concurrent rides. Match driver in < 2 seconds from request. Location accuracy: 10 meters.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How you store and query 1M driver locations that change every 4 seconds (geospatial indexing)\n- Geohash vs quadtree: trade-offs for proximity search\n- The matching flow: from ride request to driver acceptance including timeouts and re-matching\n- How surge pricing is computed and updated every 5 minutes per zone\n- Real-time trip tracking: how the rider sees the driver moving on the map\n\nWe'll explore geohash precision, cross-region driver pools, and ETA computation in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Uber"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "whatsapp-chat",
+    "title": "WhatsApp / Slack",
+    "description": "Design a real-time messaging system supporting 1:1 and group chats with read receipts and offline delivery.",
+    "statement": "Design a real-time messaging system supporting 1:1 chats, group chats, read receipts, and offline message delivery.\n\n**Scale:** 1B daily active users (WhatsApp scale). 100B messages/day (1.16M messages/sec). Group chats up to 1024 members. At-least-once delivery. Offline users: store messages for up to 30 days.\n\n**Your task:** Create a high-level system design diagram and describe:\n- WebSocket connections: with 1B users, how many connection servers do you need and how are users assigned?\n- How a message from User A reaches User B who is connected to a different WebSocket server\n- Group message fan-out: 1 message \u2192 up to 1024 copies \u2014 how do you handle this efficiently?\n- Offline delivery: how do you store messages for offline users and deliver them when they reconnect?\n- End-to-end encryption: what does this mean for your server-side architecture?\n\nWe'll explore consistent hashing for connection servers, Redis pub/sub routing, and Cassandra for message storage in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Meta",
+      "Slack"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "google-drive",
+    "title": "Google Drive",
+    "description": "Design a cloud file storage system with sync across devices, sharing, versioning, and deduplication.",
+    "statement": "Design a cloud file storage system with sync, sharing, versioning, and collaborative editing across devices.\n\n**Scale:** 1B registered users, 100M DAU. 10M file uploads/day. Average file size: 1MB (mostly documents, some videos). Files up to 5TB supported. Sync across unlimited devices per user. File history: retain last 100 versions.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How you efficiently sync a 100MB file that had only 1KB changed (chunking and delta sync)\n- Content-based deduplication: if 1000 users upload the same file, how do you store it once?\n- The chunk/block approach to file storage (chunk size, hashing, storage layer)\n- How you handle conflict when two devices edit the same file simultaneously\n- The API design for resumable chunked uploads\n\nWe'll explore Lamport timestamps, CRDTs for collaborative text editing, and tier storage in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Google"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "payment-system",
+    "title": "Payment System",
+    "description": "Design a payment processing system handling transactions with zero-tolerance for double charges and financial consistency.",
+    "statement": "Design a payment processing system handling transactions, preventing double charges, and ensuring financial consistency.\n\n**Scale:** 1M transactions/day, 100K peak TPS during sales events. Zero tolerance for double charges or money loss. Multi-currency support. Integration with 20+ payment providers. PCI DSS compliance required.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How you prevent the same payment from being charged twice (client retry on timeout scenario)\n- What happens if your service crashes between 'charge the card' and 'update the order' (distributed transaction problem)\n- Idempotency key: what it is, how Stripe uses it, how you implement it\n- Saga pattern vs two-phase commit for distributed transactions across payment + inventory + order services\n- The outbox pattern for reliably publishing payment events to downstream services\n\nWe'll explore reconciliation jobs, audit logs, and multi-currency exchange rates in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Stripe"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "distributed-id",
+    "title": "Distributed ID Generator",
+    "description": "Design a system that generates globally unique IDs at high throughput, roughly time-sortable, without coordination.",
+    "statement": "Design a system that generates globally unique IDs at high throughput, roughly time-sortable, without coordination between nodes.\n\n**Scale:** 10K IDs/sec per node, 100 nodes = 1M IDs/sec total. IDs must be globally unique, roughly time-sortable, no single point of failure, fit in 64 bits (BIGINT).\n\n**Your task:** Create a high-level system design diagram and describe:\n- Why UUID v4 (random) might be bad for database index performance\n- How Twitter Snowflake works: 41-bit timestamp + 10-bit machine ID + 12-bit sequence counter\n- How machine IDs are assigned at startup (ZooKeeper/etcd coordination)\n- What happens if two machines have different system clocks (clock skew handling)\n- UUIDv7 vs Snowflake: similarities, differences, when to use each\n\nWe'll explore clock rollback handling, batch ID generation, and multi-datacenter ID namespacing in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Twitter"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "recommendation-engine",
+    "title": "Recommendation Engine",
+    "description": "Design a product recommendation system for an e-commerce platform combining collaborative filtering with real-time signals.",
+    "statement": "Design a product recommendation system for an e-commerce platform (Flipkart/Amazon scale) combining collaborative filtering with real-time behavioral signals.\n\n**Scale:** 100M users, 10M products. Recommendations updated every 30 minutes. Real-time signal: last 3 actions within session boost relevance. Cold start: new users get editorial recommendations. P99 recommendation latency < 50ms.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Collaborative filtering: user-based vs item-based \u2014 which scales better to 100M users and why\n- How to compute recommendations without a 100M \u00d7 10M matrix factorization on every request\n- What a feature store is and why you need one for real-time ML inference\n- Two-stage ranking: offline batch (collaborative filtering) + online re-ranking (lightweight model)\n- How A/B testing works when you're running multiple recommendation algorithms simultaneously\n\nWe'll explore cold start solutions, session-based recommendations, and model monitoring in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Amazon"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "live-streaming",
+    "title": "Live Streaming Platform",
+    "description": "Design a live streaming platform with 25M concurrent viewers, low latency, and real-time chat.",
+    "statement": "Design a platform for live video streaming with millions of concurrent viewers, low latency, and chat.\n\n**Scale:** 25M concurrent viewers peak (Hotstar IPL scale). Stream latency from broadcaster to viewer < 10 seconds (LL-HLS). Chat: 10K messages/minute during peak. Global audience.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Why you can't use the same CDN strategy for live vs on-demand video\n- The RTMP ingest pipeline: from broadcaster's OBS to viewer's browser\n- How 25M concurrent viewers at 4 Mbps each maps to CDN capacity requirements\n- Chat fan-out at IPL scale: how do you deliver 10K messages/minute to 25M viewers?\n- Low-latency HLS (LL-HLS): how 2-second segments differ from standard 10-second segments\n\nWe'll explore DVR/rewind, stream health monitoring, and multi-region chat partitioning in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Google"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "typeahead-search",
+    "title": "Analytics Platform",
+    "description": "Design an analytics platform that ingests clickstream events, processes them in real-time, and serves sub-second dashboard queries.",
+    "statement": "Design an analytics platform that ingests clickstream events from 100M users, processes them in real-time, and serves dashboards.\n\n**Scale:** 100M users \u00d7 10 events/session \u00d7 5 sessions/day = 5B events/day (57.8K events/sec). Real-time metrics update within 5 seconds. Historical queries over 2 years. Dashboard query latency < 1 second for last-day metrics.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Lambda architecture: batch layer + speed layer \u2014 where each shines\n- Kappa architecture: streaming only \u2014 when this makes more sense\n- How many Kafka partitions you need for 57.8K events/sec and how you partition\n- Pre-aggregation strategy: why compute hourly rollups rather than querying 5B raw events\n- Funnel analysis: how to track a user journey across up to 10 steps efficiently\n\nWe'll explore ClickHouse for OLAP, Flink for stream processing, and tiered data retention in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "mint-finance",
+    "title": "Mint.com",
+    "description": "Design a personal finance aggregation service connecting to banks, categorizing transactions, and tracking budgets.",
+    "statement": "Design a personal finance aggregation service that connects to banks, categorizes transactions, and tracks budgets.\n\n**Scale:** 10M users, each with 2\u20133 connected bank accounts. Poll bank APIs every hour for new transactions. Categorize transactions with < 5% error rate. Budget alerts within 5 minutes of threshold breach.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How you securely connect to banks (Plaid OAuth flow, token storage)\n- Transaction categorization: rule-based vs ML model \u2014 maintenance trade-offs\n- Polling 10M \u00d7 2.5 accounts hourly = 25M bank API calls/hour \u2014 how do you manage rate limits?\n- Where ACID transactions matter in this system vs where eventual consistency is acceptable\n- Budget alert delivery: how do you detect threshold breaches and notify in under 5 minutes?\n\nWe'll explore credential encryption, ML model retraining, and bank API failure handling in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "fb-sales-rank",
+    "title": "Real-Time Leaderboard",
+    "description": "Design Amazon/Flipkart's bestseller ranking feature \u2014 near-real-time product rankings by category with Big Billion Day scale.",
+    "statement": "Design Amazon/Flipkart's bestseller ranking feature \u2014 compute and display product rankings by category updated in near-real-time.\n\n**Scale:** 10M products across 1000 categories. Rankings updated every minute. Top 100 per category surfaced to users. During Big Billion Day: 50K orders/sec.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How Redis sorted sets (ZINCRBY) can power real-time rankings and the throughput they support\n- Whether you need per-minute, per-hour, or per-day accuracy \u2014 and how the answer changes the architecture\n- How you combine historical sales rank + recent sales velocity into a single score\n- At 1000 categories \u00d7 10M products, what is the Redis memory footprint and how do you manage it?\n- How rankings are exposed via API with appropriate caching\n\nWe'll explore sliding window velocity computation, Kafka order events, and weekly Spark batch jobs in follow-up questions.",
+    "category": "Interview Prep",
+    "difficulty": "Hard",
+    "companies": [
+      "Amazon"
+    ],
+    "type": "system_design",
+    "timeMinutes": 45
+  },
+  {
+    "id": "parking-lot",
+    "title": "Parking Lot",
+    "description": "Design an OOP model for a multi-floor parking lot that handles different vehicle types and ticketing.",
+    "category": "LLD",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon",
+      "Google"
+    ],
+    "type": "lld",
+    "timeMinutes": 30,
+    "statement": "Design a parking lot system.\n\nSupport multiple floors, different vehicle types (bike, car, truck), ticket generation on entry, and fee calculation on exit.\n\nFocus on class design, relationships, and the core booking/release flow."
+  },
+  {
+    "id": "elevator-system",
+    "title": "Elevator System",
+    "description": "Design the class structure and scheduling algorithm for a multi-elevator building system.",
+    "category": "LLD",
+    "difficulty": "Medium",
+    "companies": [
+      "Microsoft",
+      "Amazon"
+    ],
+    "type": "lld",
+    "timeMinutes": 30,
+    "statement": "Design an elevator control system for a building with multiple elevators.\n\nHandle floor requests, elevator scheduling (nearest car algorithm), door state, and direction.\n\nFocus on OOP design, state machines, and the dispatch algorithm."
+  },
+  {
+    "id": "chess-game",
+    "title": "Chess Game",
+    "description": "Design the object model for a two-player chess game including move validation and game state.",
+    "category": "LLD",
+    "difficulty": "Medium",
+    "companies": [
+      "Google",
+      "Meta"
+    ],
+    "type": "lld",
+    "timeMinutes": 30,
+    "statement": "Design a chess game.\n\nModel the board, pieces, move validation, check/checkmate detection, and game state.\n\nFocus on class hierarchy for pieces, the board representation, and how moves are validated."
+  },
+  {
+    "id": "lru-cache",
+    "title": "LRU Cache",
+    "description": "Design and implement a thread-safe LRU cache with O(1) get and put operations.",
+    "category": "LLD",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta"
+    ],
+    "type": "lld",
+    "timeMinutes": 30,
+    "statement": "Design a thread-safe LRU (Least Recently Used) cache.\n\nSupport O(1) get and put. Handle concurrent access safely. Discuss eviction policy and capacity management.\n\nFocus on the data structure choice, concurrency strategy, and API design."
+  },
+  {
+    "id": "vending-machine",
+    "title": "Vending Machine",
+    "description": "Design a vending machine that handles product selection, payment processing, and change dispensing.",
+    "category": "LLD",
+    "difficulty": "Easy",
+    "companies": [
+      "Amazon",
+      "Microsoft"
+    ],
+    "type": "lld",
+    "timeMinutes": 20,
+    "statement": "Design a vending machine.\n\nHandle product inventory, multiple payment methods (coin, card), change dispensing, and refund handling.\n\nFocus on state machine design, payment abstraction, and error handling."
+  },
+  {
+    "id": "hotel-booking",
+    "title": "Hotel Booking System",
+    "description": "Design the class structure for a hotel booking system with room management and reservation handling.",
+    "category": "LLD",
+    "difficulty": "Medium",
+    "companies": [
+      "Airbnb",
+      "Booking"
+    ],
+    "type": "lld",
+    "timeMinutes": 30,
+    "statement": "Design a hotel booking system.\n\nHandle room types, availability, reservations, check-in/check-out, and cancellation policies.\n\nFocus on the entity model, concurrency for double-booking prevention, and the booking lifecycle."
+  },
+  {
+    "id": "library-management",
+    "title": "Library Management System",
+    "description": "Design an OOP model for a library system with book catalog, member management, and lending.",
+    "category": "LLD",
+    "difficulty": "Easy",
+    "companies": [
+      "Amazon"
+    ],
+    "type": "lld",
+    "timeMinutes": 20,
+    "statement": "Design a library management system.\n\nHandle book catalog, member accounts, book lending/returning, overdue fines, and search.\n\nFocus on entity relationships, the lending lifecycle, and fine calculation logic."
+  },
+  {
+    "id": "food-delivery",
+    "title": "Food Delivery App",
+    "description": "Design the class model for a food delivery platform handling restaurants, menus, orders, and delivery tracking.",
+    "category": "LLD",
+    "difficulty": "Hard",
+    "companies": [
+      "Uber",
+      "DoorDash",
+      "Swiggy"
+    ],
+    "type": "lld",
+    "timeMinutes": 40,
+    "statement": "Design a food delivery application.\n\nHandle restaurant onboarding, menu management, order placement, delivery assignment, real-time tracking, and payment.\n\nFocus on the order state machine, delivery partner assignment, and the restaurant-menu-item hierarchy."
+  },
+  {
+    "id": "atm-machine",
+    "title": "ATM Machine",
+    "description": "Design the software model for an ATM supporting withdrawals, deposits, balance inquiries, and PIN management.",
+    "category": "LLD",
+    "difficulty": "Medium",
+    "companies": [
+      "Goldman Sachs",
+      "JP Morgan"
+    ],
+    "type": "lld",
+    "timeMinutes": 30,
+    "statement": "Design an ATM machine.\n\nHandle card insertion, PIN validation, withdrawal (with denomination selection), deposit, balance inquiry, and session timeout.\n\nFocus on state machine design, cash dispensing algorithm, and secure session handling."
+  },
+  {
+    "id": "social-network-lld",
+    "title": "Social Network (Friends/Feed)",
+    "description": "Design the class model for core social network features: user profiles, friend connections, and post feeds.",
+    "category": "LLD",
+    "difficulty": "Hard",
+    "companies": [
+      "Meta",
+      "LinkedIn"
+    ],
+    "type": "lld",
+    "timeMinutes": 40,
+    "statement": "Design the low-level model for a social network.\n\nHandle user profiles, friend requests/connections, post creation, feed generation (simple, non-ML), and notifications.\n\nFocus on the graph model for connections, feed aggregation approach, and notification dispatch."
+  },
+  {
+    "id": "leadership-conflict",
+    "title": "Handling Team Conflict",
+    "description": "Describe a time you navigated a significant disagreement within your team.",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you had a significant conflict with a teammate or manager.\n\nWalk me through: the situation, your role, the specific disagreement, what you did to resolve it, and the outcome.\n\nUse the STAR format. I will follow up on your decision-making and leadership."
+  },
+  {
+    "id": "delivery-pressure",
+    "title": "Delivery Under Pressure",
+    "description": "Describe a time you delivered a project under extreme time pressure or with significant technical challenges.",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon",
+      "Meta",
+      "Microsoft"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you had to deliver something important under significant time pressure or constraints.\n\nWalk me through: the situation, what made it hard, the trade-offs you made, and what you shipped.\n\nUse the STAR format. I will probe on what you cut, what you kept, and how you communicated."
+  },
+  {
+    "id": "technical-disagreement",
+    "title": "Disagreeing with Technical Direction",
+    "description": "Describe a time you disagreed with a technical decision made by your team or leadership.",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "companies": [
+      "Google",
+      "Amazon",
+      "Apple"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you disagreed with a technical decision \u2014 whether from your team, a peer, or leadership.\n\nWalk me through: the decision, why you disagreed, how you raised it, and what happened.\n\nI will probe on how you handled it when you were overruled, and how you maintained a working relationship."
+  },
+  {
+    "id": "ambiguous-problem",
+    "title": "Navigating Ambiguity",
+    "description": "Describe a time you had to make significant progress on a problem that was poorly defined.",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you had to make significant progress on a problem that was poorly defined or where requirements were unclear.\n\nWalk me through: the situation, how you clarified scope, what decisions you made independently, and the outcome.\n\nI will probe on how you balanced moving fast vs. getting clarity."
+  },
+  {
+    "id": "mentorship",
+    "title": "Mentoring a Junior Engineer",
+    "description": "Describe a time you helped grow a junior engineer on your team.",
+    "category": "Behavioral",
+    "difficulty": "Easy",
+    "companies": [
+      "Google",
+      "Meta",
+      "Microsoft"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you mentored or coached a junior engineer.\n\nWalk me through: the engineer, the challenge they were facing, what you did to help, and the outcome.\n\nI will probe on your coaching approach and how you measured their growth."
+  },
+  {
+    "id": "cross-functional",
+    "title": "Cross-Functional Collaboration",
+    "description": "Describe a time you drove alignment across multiple teams or functions to ship something.",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you had to align and coordinate across multiple teams or functions to ship a project.\n\nWalk me through: the project, who was involved, what made alignment hard, and how you drove it.\n\nI will probe on how you handled teams with competing priorities."
+  },
+  {
+    "id": "failure",
+    "title": "A Significant Failure",
+    "description": "Describe a significant professional failure and what you learned from it.",
+    "category": "Behavioral",
+    "difficulty": "Hard",
+    "companies": [
+      "Amazon",
+      "Google",
+      "Meta",
+      "Microsoft"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a significant professional failure \u2014 something where the outcome was bad and you were responsible.\n\nWalk me through: what happened, your role in it, the impact, and what you learned and changed.\n\nI will probe on ownership, self-awareness, and the concrete changes you made."
+  },
+  {
+    "id": "influence-without-authority",
+    "title": "Influence Without Authority",
+    "description": "Describe a time you drove a significant change without having direct authority over the people involved.",
+    "category": "Behavioral",
+    "difficulty": "Hard",
+    "companies": [
+      "Google",
+      "Amazon",
+      "Meta"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you drove a significant change or decision without having formal authority over the people involved.\n\nWalk me through: the change, who needed to be influenced, your approach, and the outcome.\n\nI will probe on how you built buy-in and what you did when people pushed back."
+  },
+  {
+    "id": "data-driven-decision",
+    "title": "Data-Driven Decision",
+    "description": "Describe a time you used data to make or change a significant technical or product decision.",
+    "category": "Behavioral",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon",
+      "Meta",
+      "Google"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you used data to make or change a significant decision.\n\nWalk me through: the decision, what data you gathered, how you analyzed it, and what changed as a result.\n\nI will probe on what data you chose, what you ignored, and how confident you were in the conclusion."
+  },
+  {
+    "id": "scaling-challenge",
+    "title": "Scaling a System or Team",
+    "description": "Describe a time you had to scale something \u2014 a system, a team, or a process \u2014 that was not ready to scale.",
+    "category": "Behavioral",
+    "difficulty": "Hard",
+    "companies": [
+      "Google",
+      "Meta",
+      "Amazon"
+    ],
+    "type": "behavioral",
+    "timeMinutes": 20,
+    "statement": "Tell me about a time you had to scale something \u2014 a technical system, a team, or a process \u2014 that was not designed for the load it needed to handle.\n\nWalk me through: the situation, what the breaking points were, what you did, and the outcome.\n\nI will probe on the trade-offs you made and what you would do differently."
+  }
+]
