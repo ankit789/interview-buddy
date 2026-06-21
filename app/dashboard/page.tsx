@@ -5,6 +5,15 @@ import { createClient } from "@/lib/supabase/server";
 import { getProblemById } from "@/lib/problems";
 import { Clock, ChevronRight, BarChart2, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ProgressAnalytics } from "@/components/dashboard/ProgressAnalytics";
+import {
+  buildScoreTrend,
+  buildDimensionStats,
+  buildRecurringGaps,
+  evalMaxTotal,
+  type EvalRecord,
+} from "@/lib/analytics";
+import type { InterviewType, ReshadeScore, Verdict } from "@/lib/types";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -15,7 +24,7 @@ export default async function DashboardPage() {
     .from("interview_sessions")
     .select(`
       id, problem_id, interview_type, difficulty, status, created_at, completed_at,
-      interview_evaluations (total, verdict)
+      interview_evaluations (total, verdict, scores, missed, stalled)
     `)
     .eq("user_id", user.id)
     .order("created_at", { ascending: false })
@@ -26,7 +35,9 @@ export default async function DashboardPage() {
     const evaluation = Array.isArray(s.interview_evaluations)
       ? s.interview_evaluations[0]
       : s.interview_evaluations;
-    return { ...s, problem, evaluation };
+    const scores = (evaluation?.scores as ReshadeScore[] | undefined) ?? [];
+    const maxTotal = scores.length ? evalMaxTotal(scores) : 14;
+    return { ...s, problem, evaluation, maxTotal };
   });
 
   const completed = rows.filter((r) => r.status === "completed");
@@ -37,6 +48,24 @@ export default async function DashboardPage() {
     const v = r.evaluation?.verdict as keyof typeof verdictCounts | undefined;
     if (v && v in verdictCounts) verdictCounts[v]++;
   }
+
+  // Build analytics from completed, scored sessions.
+  const evalRecords: EvalRecord[] = completed
+    .filter((r) => r.evaluation)
+    .map((r) => ({
+      date: r.completed_at ?? r.created_at,
+      interviewType: r.interview_type as InterviewType,
+      title: r.problem?.title ?? r.problem_id,
+      total: r.evaluation!.total ?? 0,
+      verdict: r.evaluation!.verdict as Verdict,
+      scores: (r.evaluation!.scores as ReshadeScore[] | undefined) ?? [],
+      missed: (r.evaluation!.missed as string[] | undefined) ?? [],
+      stalled: (r.evaluation!.stalled as string[] | undefined) ?? [],
+    }));
+
+  const trend = buildScoreTrend(evalRecords);
+  const dimensionStats = buildDimensionStats(evalRecords);
+  const gaps = buildRecurringGaps(evalRecords);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -55,6 +84,11 @@ export default async function DashboardPage() {
             <StatCard label="Borderline" value={verdictCounts["Borderline"]} icon={<Trophy className="w-4 h-4" />} />
             <StatCard label="Not Ready" value={verdictCounts["Not Ready"]} icon={<Trophy className="w-4 h-4" />} />
           </div>
+        )}
+
+        {/* Progress analytics */}
+        {evalRecords.length > 0 && (
+          <ProgressAnalytics trend={trend} dimensionStats={dimensionStats} gaps={gaps} />
         )}
 
         {/* In progress */}
@@ -153,7 +187,7 @@ function SessionRow({ session }: { session: ReturnType<typeof buildRow> }) {
 
       {session.evaluation?.total != null && (
         <span className="font-mono text-sm font-semibold text-muted-foreground shrink-0 w-12 text-right">
-          {session.evaluation.total}/14
+          {session.evaluation.total}/{session.maxTotal}
         </span>
       )}
 
@@ -204,5 +238,6 @@ type BuildRowResult = {
   completed_at: string | null;
   problem: ReturnType<typeof getProblemById>;
   evaluation: { total: number; verdict: string } | undefined;
+  maxTotal: number;
 };
 function buildRow(_: unknown): BuildRowResult { return _ as BuildRowResult; }
