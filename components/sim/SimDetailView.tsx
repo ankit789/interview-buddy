@@ -28,7 +28,7 @@ export function SimDetailView({ run }: { run: SimResult }) {
   const { transcript, signals, evaluation, interviewerFlags } = run;
   const status = run.status ?? "completed";
   const isLive = status === "running" || status === "evaluating";
-  const maxScore = evaluation?.scores.reduce((a, s) => a + s.max, 0) ?? 0;
+  const maxScore = evaluation?.scores.reduce((a, s) => a + (s.max ?? 2), 0) ?? 0;
 
   const router = useRouter();
   // Live runs: re-fetch the server component every 2s so the transcript updates in place.
@@ -223,11 +223,11 @@ export function SimDetailView({ run }: { run: SimResult }) {
             <>
               <div className="space-y-2.5">
                 {evaluation.scores.map((s) => (
-                  <div key={s.letter} className="flex items-center gap-3">
+                  <div key={s.letter ?? s.label} className="flex items-center gap-3">
                     <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
                       <div
                         className="h-full bg-primary rounded-full"
-                        style={{ width: `${(s.score / s.max) * 100}%` }}
+                        style={{ width: `${(s.score / (s.max ?? 2)) * 100}%` }}
                       />
                     </div>
                     <span className="font-mono text-xs tabular-nums w-8 text-right text-muted-foreground">

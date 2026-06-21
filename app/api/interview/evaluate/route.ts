@@ -137,12 +137,18 @@ export async function POST(req: Request) {
 
   const signalsRecord = { ...signals, capReason };
 
+  // The evaluator JSON omits per-dimension max; every RESHADED dimension is 0-2.
+  const scores = ((evaluation.scores as { max?: number }[] | undefined) ?? []).map((s) => ({
+    ...s,
+    max: typeof s.max === "number" ? s.max : 2,
+  }));
+
   // Save evaluation
   const { data: saved, error: saveError } = await supabase
     .from("interview_evaluations")
     .insert({
       session_id: sessionId,
-      scores: evaluation.scores,
+      scores,
       total: evaluation.total,
       verdict,
       covered: evaluation.covered ?? [],
