@@ -24,8 +24,14 @@ export interface InterviewSession {
   target_level: InterviewLevel;
   status: SessionStatus;
   canvas_state: Record<string, unknown> | null;
+  code_state: CodeState | null;
   created_at: string;
   completed_at: string | null;
+}
+
+export interface CodeState {
+  code: string;
+  language: string;
 }
 
 export interface InterviewMessage {

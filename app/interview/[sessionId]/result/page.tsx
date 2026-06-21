@@ -82,6 +82,7 @@ export default async function ResultPage({ params }: Props) {
             messages={messages ?? []}
             canvasState={session.canvas_state ?? null}
             hasWhiteboard={hasWhiteboard}
+            codeState={session.code_state ?? null}
           />
           <Link
             href="/dashboard"

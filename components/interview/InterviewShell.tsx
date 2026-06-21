@@ -5,6 +5,7 @@ import { PhaseBar } from "./PhaseBar";
 import { Timer } from "./Timer";
 import { ChatPanel } from "./ChatPanel";
 import { ExcalidrawPanel } from "./ExcalidrawPanel";
+import { CodeEditorPanel } from "./CodeEditorPanel";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { getPhases } from "@/lib/prompts";
 import type { InterviewSession, InterviewMessage, Problem } from "@/lib/types";
@@ -41,6 +42,9 @@ export function InterviewShell({
 
   const phases = getPhases(session.interview_type);
   const isSystemDesign = session.interview_type === "system_design";
+  const isLld = session.interview_type === "lld";
+  // Both SD and LLD use a resizable side panel; only the left-hand tool differs.
+  const hasSidePanel = isSystemDesign || isLld;
 
   const handleDiagramFeedback = useCallback(
     async (elements: ExcalidrawElement[]) => {
@@ -138,19 +142,26 @@ export function InterviewShell({
 
       {/* Main content — desktop only */}
       <div ref={containerRef} className="hidden md:flex flex-1 overflow-hidden">
-        {isSystemDesign ? (
+        {hasSidePanel ? (
           <>
-            {/* Canvas panel */}
+            {/* Tool panel — whiteboard for SD, code editor for LLD */}
             <div
               className="flex flex-col overflow-hidden"
               style={{ width: `${canvasPct}%` }}
             >
-              <ExcalidrawPanel
-                sessionId={session.id}
-                initialCanvasState={session.canvas_state}
-                onRequestDiagramFeedback={handleDiagramFeedback}
-                diagramFeedbackLoading={diagramFeedbackLoading}
-              />
+              {isSystemDesign ? (
+                <ExcalidrawPanel
+                  sessionId={session.id}
+                  initialCanvasState={session.canvas_state}
+                  onRequestDiagramFeedback={handleDiagramFeedback}
+                  diagramFeedbackLoading={diagramFeedbackLoading}
+                />
+              ) : (
+                <CodeEditorPanel
+                  sessionId={session.id}
+                  initialCodeState={session.code_state}
+                />
+              )}
             </div>
 
             {/* Drag handle */}

@@ -11,8 +11,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
-import { Loader2, PanelRight, PenLine, MessagesSquare } from "lucide-react";
+import { Loader2, PanelRight, PenLine, MessagesSquare, Code2 } from "lucide-react";
 import type { ExcalidrawElement } from "@/lib/excalidraw-types";
+import type { CodeState } from "@/lib/types";
 
 const Excalidraw = dynamic(
   () => import("@excalidraw/excalidraw").then((mod) => mod.Excalidraw),
@@ -38,14 +39,26 @@ interface Props {
   canvasState: Record<string, unknown> | null;
   /** True for system-design sessions, which have a whiteboard. */
   hasWhiteboard: boolean;
+  /** Code the candidate wrote — present for LLD sessions. */
+  codeState?: CodeState | null;
 }
 
-export function SessionReviewPane({ messages, canvasState, hasWhiteboard }: Props) {
+type Tab = "whiteboard" | "code" | "transcript";
+
+export function SessionReviewPane({ messages, canvasState, hasWhiteboard, codeState }: Props) {
   const elements = (canvasState?.elements as ExcalidrawElement[] | undefined) ?? [];
   const hasDiagram = hasWhiteboard && elements.length > 0;
-  const [tab, setTab] = useState<"whiteboard" | "transcript">(
-    hasDiagram ? "whiteboard" : "transcript"
+  const code = codeState?.code?.trim() ?? "";
+  const hasCode = code.length > 0;
+  const [tab, setTab] = useState<Tab>(
+    hasDiagram ? "whiteboard" : hasCode ? "code" : "transcript"
   );
+
+  const triggerLabel = hasWhiteboard
+    ? "Whiteboard & transcript"
+    : hasCode
+    ? "Code & transcript"
+    : "Transcript";
 
   return (
     <Sheet>
@@ -56,7 +69,7 @@ export function SessionReviewPane({ messages, canvasState, hasWhiteboard }: Prop
         )}
       >
         <PanelRight className="w-4 h-4" />
-        Whiteboard &amp; transcript
+        {triggerLabel}
       </SheetTrigger>
 
       <SheetContent
@@ -67,6 +80,8 @@ export function SessionReviewPane({ messages, canvasState, hasWhiteboard }: Prop
           // comfortable reading width.
           tab === "whiteboard"
             ? "w-full sm:!max-w-[min(96vw,1280px)]"
+            : tab === "code"
+            ? "w-full sm:!max-w-3xl"
             : "w-full sm:!max-w-2xl"
         )}
       >
@@ -82,6 +97,14 @@ export function SessionReviewPane({ messages, canvasState, hasWhiteboard }: Prop
                 onClick={() => setTab("whiteboard")}
                 icon={<PenLine className="w-3.5 h-3.5" />}
                 label="Whiteboard"
+              />
+            )}
+            {hasCode && (
+              <TabButton
+                active={tab === "code"}
+                onClick={() => setTab("code")}
+                icon={<Code2 className="w-3.5 h-3.5" />}
+                label={codeState?.language ? `Code · ${codeState.language}` : "Code"}
               />
             )}
             <TabButton
@@ -134,6 +157,14 @@ export function SessionReviewPane({ messages, canvasState, hasWhiteboard }: Prop
                   No diagram was drawn in this session.
                 </div>
               )}
+            </div>
+          )}
+
+          {tab === "code" && hasCode && (
+            <div className="h-full overflow-auto bg-muted/30">
+              <pre className="font-mono text-xs leading-relaxed p-4 min-w-full w-max">
+                <code className="text-foreground">{code}</code>
+              </pre>
             </div>
           )}
 

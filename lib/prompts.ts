@@ -326,6 +326,8 @@ ${levelContext}
 
 ${signalContext}
 
+The candidate may have written actual code in an editor — if a "[CANDIDATE'S CODE]" section appears below, treat that code as the primary artifact for "Class Design", "OOP Principles", and "API / Interface": judge the real classes, fields, methods, relationships, and interfaces they declared, not just how they described them in chat. Concrete, well-structured code is strong evidence; no code or only a vague verbal description is a gap.
+
 Full interview transcript:
 ${transcript}
 

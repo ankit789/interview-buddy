@@ -39,6 +39,20 @@ function summarizeCanvas(canvasState: Record<string, unknown> | null): string | 
   }. Judge whether the right components are present, connected, and the data flow is coherent.`;
 }
 
+// Render the LLD code the candidate wrote so the evaluator scores the actual
+// class design, not just the chat description of it.
+function summarizeCode(codeState: Record<string, unknown> | null): string | null {
+  const code = (codeState?.code as string | undefined)?.trim();
+  if (!code) return null;
+  // Ignore an untouched starter (just the seed comment, no real declarations).
+  const meaningful = code
+    .split("\n")
+    .filter((l) => l.trim() && !l.trim().startsWith("//") && !l.trim().startsWith("#"));
+  if (meaningful.length === 0) return null;
+  const language = (codeState?.language as string | undefined) ?? "code";
+  return `[CANDIDATE'S CODE — ${language}]\n\`\`\`${language}\n${code}\n\`\`\``;
+}
+
 export async function POST(req: Request) {
   const supabase = await createClient();
   const {
@@ -83,9 +97,14 @@ export async function POST(req: Request) {
   // Include a textual summary of the candidate's whiteboard so the evaluator judges the
   // actual diagram (components + connections), not just the chat transcript.
   const canvasSummary = summarizeCanvas(session.canvas_state);
-  const transcript = canvasSummary
-    ? `${transcriptBody}\n\n[CANDIDATE'S WHITEBOARD DIAGRAM]\n${canvasSummary}`
-    : transcriptBody;
+  const codeSummary = summarizeCode(session.code_state);
+  let transcript = transcriptBody;
+  if (canvasSummary) {
+    transcript += `\n\n[CANDIDATE'S WHITEBOARD DIAGRAM]\n${canvasSummary}`;
+  }
+  if (codeSummary) {
+    transcript += `\n\n${codeSummary}`;
+  }
 
   // Compute behavioral interaction signals from the session
   const signals = computeSignals(session.interview_type, msgs);

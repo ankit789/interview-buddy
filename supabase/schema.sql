@@ -46,12 +46,14 @@ create table if not exists public.interview_sessions (
   target_level    text not null default 'senior' check (target_level in ('mid', 'senior', 'staff')),
   status          text not null default 'active' check (status in ('active', 'completed')),
   canvas_state    jsonb,                    -- Excalidraw elements, SD only
+  code_state      jsonb,                    -- { code, language }, LLD only
   created_at      timestamptz not null default now(),
   completed_at    timestamptz
 );
 
 -- Additive migration for existing installs (safe to re-run)
 alter table public.interview_sessions add column if not exists target_level text not null default 'senior';
+alter table public.interview_sessions add column if not exists code_state jsonb;
 
 create index idx_sessions_user_id     on public.interview_sessions(user_id);
 create index idx_sessions_status      on public.interview_sessions(user_id, status);
