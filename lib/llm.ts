@@ -22,10 +22,12 @@ interface ProviderConfig {
 
 // Preferred fallback order: most generous free budget first.
 // All four expose OpenAI-compatible /chat/completions endpoints.
+// Order = failover priority. Mistral is primary (most generous free tier),
+// Cerebras next, then Groq and Gemini.
 const PROVIDERS: ProviderConfig[] = [
+  { id: "mistral", baseURL: "https://api.mistral.ai/v1", model: "mistral-small-latest" },
   { id: "cerebras", baseURL: "https://api.cerebras.ai/v1", model: "gpt-oss-120b" },
   { id: "groq", baseURL: "https://api.groq.com/openai/v1", model: "llama-3.3-70b-versatile" },
-  { id: "mistral", baseURL: "https://api.mistral.ai/v1", model: "mistral-small-latest" },
   {
     id: "gemini",
     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
@@ -153,10 +155,12 @@ export function keysFromSettings(
     gemini_api_key?: string | null;
   } | null
 ): ProviderKeys {
+  // Settings take precedence; fall back to server env vars (useful for local
+  // dev and for providers not yet exposed in the settings UI, e.g. Mistral).
   return {
-    cerebras: settings?.cerebras_api_key ?? null,
-    groq: settings?.groq_api_key ?? null,
-    mistral: settings?.mistral_api_key ?? null,
-    gemini: settings?.gemini_api_key ?? null,
+    cerebras: settings?.cerebras_api_key ?? process.env.CEREBRAS_API_KEY ?? null,
+    groq: settings?.groq_api_key ?? process.env.GROQ_API_KEY ?? null,
+    mistral: settings?.mistral_api_key ?? process.env.MISTRAL_API_KEY ?? null,
+    gemini: settings?.gemini_api_key ?? process.env.GEMINI_API_KEY ?? null,
   };
 }
