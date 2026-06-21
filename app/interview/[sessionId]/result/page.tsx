@@ -5,6 +5,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import type { InterviewEvaluation } from "@/lib/types";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { SessionReviewPane } from "@/components/interview/SessionReviewPane";
 
 interface Props {
   params: Promise<{ sessionId: string }>;
@@ -48,6 +49,15 @@ export default async function ResultPage({ params }: Props) {
     redirect(`/interview/${sessionId}`);
   }
 
+  // Full session transcript for the review pane.
+  const { data: messages } = await supabase
+    .from("interview_messages")
+    .select("role, content, message_type")
+    .eq("session_id", sessionId)
+    .order("created_at", { ascending: true });
+
+  const hasWhiteboard = session.interview_type === "system_design";
+
   const problem = getProblemById(session.problem_id);
   const ev = evaluation as InterviewEvaluation;
 
@@ -67,7 +77,12 @@ export default async function ResultPage({ params }: Props) {
         >
           ← interview-buddy
         </Link>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
+          <SessionReviewPane
+            messages={messages ?? []}
+            canvasState={session.canvas_state ?? null}
+            hasWhiteboard={hasWhiteboard}
+          />
           <Link
             href="/dashboard"
             className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -103,7 +118,7 @@ export default async function ResultPage({ params }: Props) {
           <span className="font-mono text-2xl font-bold tabular-nums">
             {ev.total}
             <span className="text-muted-foreground text-lg font-normal">
-              /{ev.scores.reduce((a, s) => a + s.max, 0)}
+              /{ev.scores.reduce((a, s) => a + (s.max ?? 2), 0)}
             </span>
           </span>
         </div>
@@ -141,12 +156,13 @@ export default async function ResultPage({ params }: Props) {
         {/* RESHADED bars */}
         <section className="space-y-3">
           {ev.scores.map((s) => {
-            const pct = (s.score / s.max) * 100;
+            const max = s.max ?? 2;
+            const pct = (s.score / max) * 100;
             return (
-              <div key={s.letter} className="space-y-1">
+              <div key={s.letter ?? s.label} className="space-y-1">
                 <div className="flex items-center gap-3">
                   <span className="font-mono text-xs text-muted-foreground w-4 shrink-0">
-                    {s.letter.replace("2", "")}
+                    {(s.letter ?? "").replace("2", "")}
                   </span>
                   <div className="flex-1 h-1.5 bg-muted rounded-full overflow-hidden">
                     <div
@@ -155,7 +171,7 @@ export default async function ResultPage({ params }: Props) {
                     />
                   </div>
                   <span className="font-mono text-xs tabular-nums w-8 text-right text-muted-foreground">
-                    {s.score}/{s.max}
+                    {s.score}/{max}
                   </span>
                   <span className="text-xs text-foreground w-36 shrink-0">
                     {s.label}
