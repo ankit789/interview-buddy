@@ -62,7 +62,7 @@ export async function POST(req: Request) {
 
   const { data: settings } = await supabase
     .from("user_settings")
-    .select("cerebras_api_key, groq_api_key, gemini_api_key")
+    .select("mistral_api_key, cerebras_api_key, groq_api_key, gemini_api_key")
     .eq("user_id", user.id)
     .single();
 

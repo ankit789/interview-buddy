@@ -26,10 +26,10 @@ export async function POST(req: Request) {
   const problem = getProblemById(session.problem_id);
   if (!problem) return new Response("Problem not found", { status: 404 });
 
-  // Fetch user API keys (any of Cerebras / Groq / Gemini)
+  // Fetch user API keys (any of Mistral / Cerebras / Groq / Gemini)
   const { data: settings } = await supabase
     .from("user_settings")
-    .select("cerebras_api_key, groq_api_key, gemini_api_key")
+    .select("mistral_api_key, cerebras_api_key, groq_api_key, gemini_api_key")
     .eq("user_id", user.id)
     .single();
 

@@ -14,6 +14,7 @@ create table if not exists public.user_settings (
   user_id          uuid not null references auth.users(id) on delete cascade,
   groq_api_key     text,
   cerebras_api_key text,
+  mistral_api_key  text,
   gemini_api_key   text,
   anthropic_api_key text,
   updated_at       timestamptz not null default now(),
@@ -22,6 +23,7 @@ create table if not exists public.user_settings (
 
 -- Additive migration for existing installs (safe to re-run)
 alter table public.user_settings add column if not exists cerebras_api_key text;
+alter table public.user_settings add column if not exists mistral_api_key text;
 alter table public.user_settings add column if not exists gemini_api_key text;
 
 alter table public.user_settings enable row level security;

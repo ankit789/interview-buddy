@@ -6,6 +6,7 @@ import { Eye, EyeOff, Check, Loader2, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Keys {
+  mistral_api_key: string;
   cerebras_api_key: string;
   groq_api_key: string;
   gemini_api_key: string;
@@ -13,6 +14,7 @@ interface Keys {
 }
 
 const EMPTY: Keys = {
+  mistral_api_key: "",
   cerebras_api_key: "",
   groq_api_key: "",
   gemini_api_key: "",
@@ -28,16 +30,23 @@ const PROVIDER_FIELDS: {
   placeholder: string;
 }[] = [
   {
+    key: "mistral_api_key",
+    label: "Mistral API Key",
+    blurb: "Tried first — generous free tier and steady throughput for interviews.",
+    link: "https://console.mistral.ai/api-keys",
+    placeholder: "your Mistral key",
+  },
+  {
     key: "cerebras_api_key",
     label: "Cerebras API Key",
-    blurb: "Tried first — most generous free tier (1M tokens/day) and fastest.",
+    blurb: "Fallback after Mistral — fast, 1M tokens/day free.",
     link: "https://cloud.cerebras.ai",
     placeholder: "csk-…",
   },
   {
     key: "groq_api_key",
     label: "Groq API Key",
-    blurb: "Fallback if Cerebras is rate-limited.",
+    blurb: "Fallback if Mistral and Cerebras are rate-limited.",
     link: "https://console.groq.com/keys",
     placeholder: "gsk_…",
   },
@@ -65,11 +74,12 @@ export function SettingsForm() {
       if (!user) { setLoading(false); return; }
       const { data } = await supabase
         .from("user_settings")
-        .select("cerebras_api_key, groq_api_key, gemini_api_key, anthropic_api_key")
+        .select("mistral_api_key, cerebras_api_key, groq_api_key, gemini_api_key, anthropic_api_key")
         .eq("user_id", user.id)
         .single();
       if (data) {
         setKeys({
+          mistral_api_key: data.mistral_api_key ?? "",
           cerebras_api_key: data.cerebras_api_key ?? "",
           groq_api_key: data.groq_api_key ?? "",
           gemini_api_key: data.gemini_api_key ?? "",
@@ -93,6 +103,7 @@ export function SettingsForm() {
     const trimmed = (v: string) => v.trim() || null;
     const { error } = await supabase.from("user_settings").upsert({
       user_id: user.id,
+      mistral_api_key: trimmed(keys.mistral_api_key),
       cerebras_api_key: trimmed(keys.cerebras_api_key),
       groq_api_key: trimmed(keys.groq_api_key),
       gemini_api_key: trimmed(keys.gemini_api_key),
@@ -122,7 +133,7 @@ export function SettingsForm() {
     <form onSubmit={save} className="space-y-8">
       <div className="rounded-lg border border-border bg-card/50 px-4 py-3 text-xs text-muted-foreground leading-relaxed">
         Add a key for any of the interview providers below. The app tries them in order
-        (<span className="font-medium text-foreground">Cerebras → Groq → Gemini</span>) and
+        (<span className="font-medium text-foreground">Mistral → Cerebras → Groq → Gemini</span>) and
         automatically falls back to the next when one hits its quota. One key is enough to start.
       </div>
 
