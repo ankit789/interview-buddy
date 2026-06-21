@@ -91,6 +91,10 @@ export function ExcalidrawPanel({
               excalidrawRef.current = api as unknown as {
                 getSceneElements: () => readonly ExcalidrawElement[];
               };
+              // Expose the API for end-to-end automation (read/scene access).
+              if (typeof window !== "undefined") {
+                (window as unknown as { __excalidrawAPI?: unknown }).__excalidrawAPI = api;
+              }
             }}
             initialData={initialData as any}
             theme="light"
