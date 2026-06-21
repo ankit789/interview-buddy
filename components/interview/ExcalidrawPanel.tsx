@@ -92,7 +92,12 @@ export function ExcalidrawPanel({
                 getSceneElements: () => readonly ExcalidrawElement[];
               };
               // Expose the API for end-to-end automation (read/scene access).
-              if (typeof window !== "undefined") {
+              // Dev/test only — never attach in production, where it would
+              // hand any page script full read/write access to the canvas.
+              if (
+                process.env.NODE_ENV !== "production" &&
+                typeof window !== "undefined"
+              ) {
                 (window as unknown as { __excalidrawAPI?: unknown }).__excalidrawAPI = api;
               }
             }}
