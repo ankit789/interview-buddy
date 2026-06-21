@@ -4,8 +4,10 @@ import { useState, useCallback, useRef } from "react";
 import { PhaseBar } from "./PhaseBar";
 import { Timer } from "./Timer";
 import { ChatPanel } from "./ChatPanel";
+import { VoicePanel } from "./VoicePanel";
 import { ExcalidrawPanel } from "./ExcalidrawPanel";
 import { CodeEditorPanel } from "./CodeEditorPanel";
+import { Mic, Keyboard } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { getPhases } from "@/lib/prompts";
 import type { InterviewSession, InterviewMessage, Problem } from "@/lib/types";
@@ -37,6 +39,7 @@ export function InterviewShell({
     )
   );
   const [canvasPct, setCanvasPct] = useState(DEFAULT_CANVAS_PCT);
+  const [voiceMode, setVoiceMode] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
 
@@ -45,6 +48,25 @@ export function InterviewShell({
   const isLld = session.interview_type === "lld";
   // Both SD and LLD use a resizable side panel; only the left-hand tool differs.
   const hasSidePanel = isSystemDesign || isLld;
+
+  // The conversation surface — text or voice — shared by every layout branch.
+  const conversationPanel = voiceMode ? (
+    <VoicePanel
+      sessionId={session.id}
+      messages={chatMessages}
+      onMessages={setChatMessages}
+      onPhaseChange={setCurrentPhase}
+      problem={problem}
+    />
+  ) : (
+    <ChatPanel
+      sessionId={session.id}
+      messages={chatMessages}
+      onMessages={setChatMessages}
+      onPhaseChange={setCurrentPhase}
+      problem={problem}
+    />
+  );
 
   const handleDiagramFeedback = useCallback(
     async (elements: ExcalidrawElement[]) => {
@@ -125,6 +147,14 @@ export function InterviewShell({
         <div className="flex items-center gap-3 shrink-0">
           <PhaseBar phases={phases} currentPhase={currentPhase} />
           <Timer totalMinutes={problem.timeMinutes} />
+          <button
+            onClick={() => setVoiceMode((v) => !v)}
+            className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 text-xs font-medium rounded-md border border-border text-muted-foreground hover:text-foreground hover:border-border/60 transition-colors"
+            title={voiceMode ? "Switch to text" : "Switch to voice"}
+          >
+            {voiceMode ? <Keyboard className="w-3.5 h-3.5" /> : <Mic className="w-3.5 h-3.5" />}
+            {voiceMode ? "Text" : "Voice"}
+          </button>
           <ThemeToggle />
         </div>
       </header>
@@ -178,29 +208,17 @@ export function InterviewShell({
               </div>
             </div>
 
-            {/* Chat panel */}
+            {/* Conversation panel */}
             <div
               className="flex flex-col overflow-hidden"
               style={{ width: `${100 - canvasPct}%` }}
             >
-              <ChatPanel
-                sessionId={session.id}
-                messages={chatMessages}
-                onMessages={setChatMessages}
-                onPhaseChange={setCurrentPhase}
-                problem={problem}
-              />
+              {conversationPanel}
             </div>
           </>
         ) : (
           <div className="flex-1 max-w-3xl mx-auto flex flex-col overflow-hidden">
-            <ChatPanel
-              sessionId={session.id}
-              messages={chatMessages}
-              onMessages={setChatMessages}
-              onPhaseChange={setCurrentPhase}
-              problem={problem}
-            />
+            {conversationPanel}
           </div>
         )}
       </div>

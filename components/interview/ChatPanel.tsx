@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Send, Lightbulb, StopCircle, Loader2, ChevronDown, ChevronUp } from "lucide-react";
 import type { InterviewMessage } from "@/lib/types";
 import ReactMarkdown from "react-markdown";
+import { streamInterviewReply, endInterview } from "@/lib/interview-client";
 
 type Msg = Pick<InterviewMessage, "role" | "content" | "message_type">;
 
@@ -15,11 +16,6 @@ interface ChatPanelProps {
   onMessages: (updater: (prev: Msg[]) => Msg[]) => void;
   onPhaseChange: (phase: number) => void;
   problem: { title: string; description: string };
-}
-
-// Strip <think>...</think> blocks DeepSeek R1 emits
-function stripThink(text: string): string {
-  return text.replace(/<think>[\s\S]*?<\/think>/g, "").trimStart();
 }
 
 export function ChatPanel({
@@ -69,39 +65,20 @@ export function ChatPanel({
       ]);
 
       try {
-        const res = await fetch("/api/interview/message", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ sessionId, content, isHint }),
+        await streamInterviewReply(sessionId, content, isHint, {
+          onPhase: onPhaseChange,
+          onDelta: (visible) => {
+            onMessages((prev) => {
+              const updated = [...prev];
+              updated[updated.length - 1] = {
+                role: "assistant",
+                content: visible,
+                message_type: "chat",
+              };
+              return updated;
+            });
+          },
         });
-
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          throw new Error(data.error ?? "Failed to get response");
-        }
-
-        const phase = res.headers.get("X-Interview-Phase");
-        if (phase !== null) onPhaseChange(parseInt(phase, 10));
-
-        const reader = res.body!.getReader();
-        const decoder = new TextDecoder();
-        let raw = "";
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          raw += decoder.decode(value, { stream: true });
-          const visible = stripThink(raw);
-          onMessages((prev) => {
-            const updated = [...prev];
-            updated[updated.length - 1] = {
-              role: "assistant",
-              content: visible,
-              message_type: "chat",
-            };
-            return updated;
-          });
-        }
       } catch (e) {
         setError(e instanceof Error ? e.message : "Something went wrong");
         // Remove the empty placeholder on error
@@ -117,13 +94,7 @@ export function ChatPanel({
     if (ending) return;
     setEnding(true);
     try {
-      const res = await fetch("/api/interview/evaluate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.error);
+      await endInterview(sessionId);
       router.push(`/interview/${sessionId}/result`);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to generate evaluation");
