@@ -18,7 +18,7 @@ export default function SettingsPage() {
         <div className="border-t border-border pt-8">
           <p className="text-xs text-muted-foreground">
             Keys are stored in your account and used only by interview-buddy&apos;s server to call the
-            model providers (Mistral, Cerebras, Groq, Gemini, Anthropic) on your behalf during your sessions.
+            model providers (Mistral, Cerebras, Groq, Gemini, Anthropic, Google Cloud TTS) on your behalf during your sessions.
             They are never shared or used for anything else.
           </p>
         </div>

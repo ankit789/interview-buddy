@@ -17,6 +17,7 @@ create table if not exists public.user_settings (
   mistral_api_key  text,
   gemini_api_key   text,
   anthropic_api_key text,
+  google_tts_api_key text,
   updated_at       timestamptz not null default now(),
   unique (user_id)
 );
@@ -25,6 +26,7 @@ create table if not exists public.user_settings (
 alter table public.user_settings add column if not exists cerebras_api_key text;
 alter table public.user_settings add column if not exists mistral_api_key text;
 alter table public.user_settings add column if not exists gemini_api_key text;
+alter table public.user_settings add column if not exists google_tts_api_key text;
 
 alter table public.user_settings enable row level security;
 

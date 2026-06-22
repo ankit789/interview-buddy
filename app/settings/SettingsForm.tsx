@@ -11,6 +11,7 @@ interface Keys {
   groq_api_key: string;
   gemini_api_key: string;
   anthropic_api_key: string;
+  google_tts_api_key: string;
 }
 
 const EMPTY: Keys = {
@@ -19,6 +20,7 @@ const EMPTY: Keys = {
   groq_api_key: "",
   gemini_api_key: "",
   anthropic_api_key: "",
+  google_tts_api_key: "",
 };
 
 // Interview providers, in the order the app falls back through them.
@@ -74,7 +76,7 @@ export function SettingsForm() {
       if (!user) { setLoading(false); return; }
       const { data } = await supabase
         .from("user_settings")
-        .select("mistral_api_key, cerebras_api_key, groq_api_key, gemini_api_key, anthropic_api_key")
+        .select("mistral_api_key, cerebras_api_key, groq_api_key, gemini_api_key, anthropic_api_key, google_tts_api_key")
         .eq("user_id", user.id)
         .single();
       if (data) {
@@ -84,6 +86,7 @@ export function SettingsForm() {
           groq_api_key: data.groq_api_key ?? "",
           gemini_api_key: data.gemini_api_key ?? "",
           anthropic_api_key: data.anthropic_api_key ?? "",
+          google_tts_api_key: data.google_tts_api_key ?? "",
         });
       }
       setLoading(false);
@@ -108,6 +111,7 @@ export function SettingsForm() {
       groq_api_key: trimmed(keys.groq_api_key),
       gemini_api_key: trimmed(keys.gemini_api_key),
       anthropic_api_key: trimmed(keys.anthropic_api_key),
+      google_tts_api_key: trimmed(keys.google_tts_api_key),
     }, { onConflict: "user_id" });
 
     if (error) {
@@ -184,6 +188,32 @@ export function SettingsForm() {
           show={!!shown.anthropic_api_key}
           onToggle={() => toggle("anthropic_api_key")}
           placeholder="sk-ant-…"
+        />
+      </fieldset>
+
+      <fieldset className="space-y-3 border-t border-border pt-6">
+        <div className="space-y-1">
+          <legend className="text-sm font-medium">Google Cloud TTS Key</legend>
+          <p className="text-xs text-muted-foreground">
+            The interviewer&apos;s voice in voice mode (Google Neural2). Optional — without it,
+            voice mode falls back to Groq, then your browser&apos;s built-in voice. Needs the
+            Text-to-Speech API enabled on a billing-enabled project.{" "}
+            <a
+              href="https://console.cloud.google.com/apis/credentials"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-primary hover:underline inline-flex items-center gap-0.5"
+            >
+              Get a key <ExternalLink className="w-3 h-3" />
+            </a>
+          </p>
+        </div>
+        <KeyInput
+          value={keys.google_tts_api_key}
+          onChange={(v) => setKeys((k) => ({ ...k, google_tts_api_key: v }))}
+          show={!!shown.google_tts_api_key}
+          onToggle={() => toggle("google_tts_api_key")}
+          placeholder="AIza…"
         />
       </fieldset>
 
