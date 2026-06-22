@@ -12,7 +12,8 @@ const errors = [];
 page.on("pageerror", (e) => errors.push(String(e)));
 const speakCalls = [];
 page.on("response", (r) => {
-  if (r.url().includes("/api/interview/speak")) speakCalls.push(r.status());
+  if (r.url().includes("/api/interview/speak"))
+    speakCalls.push(`${r.status()} ${r.headers()["content-type"] ?? "?"}`);
 });
 
 try {
