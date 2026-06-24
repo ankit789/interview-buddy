@@ -15,7 +15,11 @@ const LEVEL_LABEL: Record<InterviewLevel, string> = {
   staff: "Staff (L6)",
 };
 
-function levelExpectations(level: InterviewLevel): string {
+// A function that returns the L4/L5/L6 expectation text for a level. Scenarios may
+// supply their own; otherwise this design-oriented default applies.
+export type LevelExpectations = (level: InterviewLevel) => string;
+
+export const defaultLevelExpectations: LevelExpectations = (level) => {
   switch (level) {
     case "mid":
       return `Bar for Mid-level (L4): a correct, working design with the right core components and a sensible data flow. They should handle the happy path well and go one level deep on at least one component. Deep operational concerns (multi-region, graceful degradation, cost) are a bonus, not required.`;
@@ -24,18 +28,24 @@ function levelExpectations(level: InterviewLevel): string {
     case "staff":
       return `Bar for Staff (L6): everything expected of Senior, PLUS operational maturity — graceful degradation, multi-region/consistency trade-offs, failure isolation, cost, and org/cross-team concerns. A solid Senior-level answer (clean design, good deep-dives) only MEETS the bar here; Strong Hire requires breadth of judgment and operational depth.`;
   }
-}
+};
 
 // Level block injected into the live interviewer prompt.
-export function interviewerLevelContext(level: InterviewLevel): string {
+export function interviewerLevelContext(
+  level: InterviewLevel,
+  expectations: LevelExpectations = defaultLevelExpectations
+): string {
   return `
-TARGET LEVEL — you are interviewing this candidate for a ${LEVEL_LABEL[level]} role. ${levelExpectations(level)}
-Calibrate your probing to this bar: at higher levels push for operational depth, trade-offs, and failure modes; at Mid, a clean working design is acceptable.`;
+TARGET LEVEL — you are interviewing this candidate for a ${LEVEL_LABEL[level]} role. ${expectations(level)}
+Calibrate your probing to this bar: at higher levels push for depth, trade-offs, and failure modes; at Mid, a clean working answer is acceptable.`;
 }
 
 // Level block injected into the evaluation prompt.
-function evalLevelContext(level: InterviewLevel): string {
-  return `LEVEL CALIBRATION — score against the ${LEVEL_LABEL[level]} bar, not an absolute one. ${levelExpectations(
+function evalLevelContext(
+  level: InterviewLevel,
+  expectations: LevelExpectations = defaultLevelExpectations
+): string {
+  return `LEVEL CALIBRATION — score against the ${LEVEL_LABEL[level]} bar, not an absolute one. ${expectations(
     level
   )}
 The verdict must reflect this bar (the SAME transcript can be Strong Hire at a lower level and Borderline at a higher one). In "feedback", explicitly state how the candidate measured against the ${LEVEL_LABEL[level]} bar and what they'd need for the next level up.`;
@@ -129,7 +139,7 @@ export function assembleEvalPrompt(
   } = Strong Hire.`;
 
   return `${scenario.buildEvaluatorIntro(problem, ctx)}
-${evalLevelContext(level)}
+${evalLevelContext(level, scenario.levelExpectations)}
 
 ${buildSignalContext(signals)}
 

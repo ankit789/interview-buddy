@@ -9,6 +9,7 @@ const TYPE_LABEL: Record<string, string> = {
   system_design: "System Design",
   lld: "Low-Level Design",
   behavioral: "Behavioral",
+  sdet_test_design: "SDET — Test Design",
 };
 
 const VERDICT_DOT: Record<string, string> = {

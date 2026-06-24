@@ -17,6 +17,7 @@ const TYPE_TABS: { value: InterviewType | "all"; label: string }[] = [
   { value: "system_design", label: "System Design" },
   { value: "lld", label: "LLD" },
   { value: "behavioral", label: "Behavioral" },
+  { value: "sdet_test_design", label: "SDET" },
 ];
 
 const DIFFICULTIES: Difficulty[] = ["Easy", "Medium", "Hard"];

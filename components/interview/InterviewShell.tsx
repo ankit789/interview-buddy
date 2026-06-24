@@ -10,6 +10,7 @@ import { CodeEditorPanel } from "./CodeEditorPanel";
 import { Mic, Keyboard } from "lucide-react";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { getPhases } from "@/lib/prompts";
+import { getScenario } from "@/lib/scenarios";
 import type { InterviewSession, InterviewMessage, Problem } from "@/lib/types";
 import type { ExcalidrawElement } from "@/lib/excalidraw-types";
 import Link from "next/link";
@@ -44,10 +45,13 @@ export function InterviewShell({
   const dragging = useRef(false);
 
   const phases = getPhases(session.interview_type);
-  const isSystemDesign = session.interview_type === "system_design";
-  const isLld = session.interview_type === "lld";
-  // Both SD and LLD use a resizable side panel; only the left-hand tool differs.
-  const hasSidePanel = isSystemDesign || isLld;
+  // The left-hand tool is driven by the scenario's declared modalities: a whiteboard
+  // (Excalidraw) for system-design/SDET, a code editor for LLD, and no side panel for
+  // conversation-only scenarios like behavioral.
+  const modalities = getScenario(session.interview_type).modalities;
+  const showWhiteboard = modalities.includes("whiteboard");
+  const showCode = modalities.includes("code");
+  const hasSidePanel = showWhiteboard || showCode;
 
   // The conversation surface — text or voice — shared by every layout branch.
   const conversationPanel = voiceMode ? (
@@ -174,12 +178,12 @@ export function InterviewShell({
       <div ref={containerRef} className="hidden md:flex flex-1 overflow-hidden">
         {hasSidePanel ? (
           <>
-            {/* Tool panel — whiteboard for SD, code editor for LLD */}
+            {/* Tool panel — whiteboard for SD/SDET, code editor for LLD */}
             <div
               className="flex flex-col overflow-hidden"
               style={{ width: `${canvasPct}%` }}
             >
-              {isSystemDesign ? (
+              {showWhiteboard ? (
                 <ExcalidrawPanel
                   sessionId={session.id}
                   initialCanvasState={session.canvas_state}

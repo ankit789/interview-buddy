@@ -19,6 +19,10 @@ const TYPE_META: Record<InterviewType, { label: string; description: string }> =
     label: "Behavioral",
     description: "STAR format, leadership principles, past experience",
   },
+  sdet_test_design: {
+    label: "SDET — Test Design",
+    description: "Coverage, edge cases, automation strategy, quality gates",
+  },
 };
 
 const LEVELS: { id: InterviewLevel; label: string; description: string }[] = [

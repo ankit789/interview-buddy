@@ -3,13 +3,15 @@ import type { Scenario } from "./types";
 import { systemDesign } from "./system-design";
 import { lld } from "./lld";
 import { behavioral } from "./behavioral";
+import { sdetTestDesign } from "./sdet-test-design";
 
-// The scenario registry. "Interview prep" is these three entries; a new use case
-// (sales role-play, OSCE, language coaching…) is one more Scenario added here.
+// The scenario registry. A new use case (sales role-play, OSCE, language coaching…)
+// is one more Scenario added here plus its entry in the InterviewType union.
 export const SCENARIOS: Record<InterviewType, Scenario> = {
   system_design: systemDesign,
   lld,
   behavioral,
+  sdet_test_design: sdetTestDesign,
 };
 
 export function getScenario(type: InterviewType): Scenario {

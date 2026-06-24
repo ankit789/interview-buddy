@@ -45,4 +45,9 @@ export interface Scenario {
   verdict: VerdictBands;
   buildEvaluatorIntro: (problem: Problem, ctx: EvaluatorContext) => string;
   scoringGuide: string;
+
+  // Optional per-scenario level calibration. When omitted, the shared design-oriented
+  // default is used. SDET (and other non-design scenarios) override this so the L4/L5/L6
+  // bar speaks the scenario's own vocabulary instead of "multi-region / graceful degradation".
+  levelExpectations?: (level: InterviewLevel) => string;
 }

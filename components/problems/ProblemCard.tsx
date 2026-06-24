@@ -16,6 +16,7 @@ const typeLabel: Record<string, string> = {
   system_design: "SD",
   lld: "LLD",
   behavioral: "BEH",
+  sdet_test_design: "SDET",
 };
 
 interface ProblemCardProps {
