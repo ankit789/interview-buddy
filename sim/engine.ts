@@ -1,5 +1,6 @@
 import type { Problem, Verdict, InterviewLevel } from "@/lib/types";
 import { buildInterviewerSystemPrompt, buildEvaluationPrompt } from "@/lib/prompts";
+import { getScenario } from "@/lib/scenarios";
 import {
   computeSignals,
   applyVerdictGuardrails,
@@ -169,7 +170,7 @@ export async function runSimulation(
   level: InterviewLevel = "senior"
 ): Promise<SimResult> {
   const interviewerSystem = buildInterviewerSystemPrompt(problem, problem.type, level);
-  const candidateSystem = persona.systemPrompt(problem);
+  const candidateSystem = persona.systemPrompt(problem, getScenario(problem.type));
 
   const transcript: SimMessage[] = [];
   const interviewerFlags: string[] = [];
@@ -359,7 +360,12 @@ export async function runSimulation(
     transcript,
     signals,
     evaluation: {
-      scores: parsed.scores ?? [],
+      // Stamp per-dimension max (the evaluator JSON omits it) exactly like the production
+      // evaluate route, so totals render against the right denominator (e.g. 18/18, not 18/12).
+      scores: ((parsed.scores ?? []) as Record<string, unknown>[]).map((s) => ({
+        ...s,
+        max: typeof s.max === "number" ? s.max : 3,
+      })) as SimEvaluation["scores"],
       total: parsed.total ?? 0,
       verdict,
       rawVerdict,

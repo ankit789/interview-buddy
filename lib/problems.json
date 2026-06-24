@@ -168,7 +168,7 @@
     "id": "project-management-tools",
     "title": "Project Management Tools",
     "description": "Design a collaborative workspace with tasks, boards, and real-time updates.",
-    "statement": "Design a front-end system for a **project management application** where teams collaborate on tasks and projects.\n\nYour design should support:\n- Organizing tasks across multiple views (boards, lists, calendars)\n- Drag-and-drop interactions with immediate feedback\n- Real-time collaboration with multiple users\n- Complex nested data (projects \u2192 lists \u2192 tasks \u2192 subtasks)\n- Filtering, searching, and permissions\n\n**Draw a diagram** showing your state management strategy, data synchronization approach, and how UI updates propagate. Label data flows and **describe** how your system handles concurrent edits, optimistic updates, and state consistency.",
+    "statement": "Design a front-end system for a **project management application** where teams collaborate on tasks and projects.\n\nYour design should support:\n- Organizing tasks across multiple views (boards, lists, calendars)\n- Drag-and-drop interactions with immediate feedback\n- Real-time collaboration with multiple users\n- Complex nested data (projects → lists → tasks → subtasks)\n- Filtering, searching, and permissions\n\n**Draw a diagram** showing your state management strategy, data synchronization approach, and how UI updates propagate. Label data flows and **describe** how your system handles concurrent edits, optimistic updates, and state consistency.",
     "category": "Front-End Systems",
     "difficulty": "Medium",
     "companies": [],
@@ -419,8 +419,8 @@
   {
     "id": "twitter-feed",
     "title": "Twitter/X Timeline",
-    "description": "Design the Twitter home timeline \u2014 show tweets from followed accounts, sorted by time, with 300M MAU.",
-    "statement": "Design the Twitter home timeline \u2014 show tweets from accounts a user follows, sorted by time, paginated.\n\n**Scale:** 300M MAU, 150M DAU. 500M tweets/day (5,787/sec). Average user follows 200 accounts. Celebrities have up to 100M followers. Timeline must load in < 200ms p99.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Fan-out on write vs fan-out on read: trade-offs for each approach\n- How you handle celebrities (100M followers) \u2014 why naive fan-out breaks\n- What a Redis timeline cache looks like (data structure, TTL, what you store)\n- How tweets are stored in the primary database\n- The API design for paginated timeline fetching\n\nWe'll explore the hybrid approach, timeline merging, and media handling in follow-up questions.",
+    "description": "Design the Twitter home timeline — show tweets from followed accounts, sorted by time, with 300M MAU.",
+    "statement": "Design the Twitter home timeline — show tweets from accounts a user follows, sorted by time, paginated.\n\n**Scale:** 300M MAU, 150M DAU. 500M tweets/day (5,787/sec). Average user follows 200 accounts. Celebrities have up to 100M followers. Timeline must load in < 200ms p99.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Fan-out on write vs fan-out on read: trade-offs for each approach\n- How you handle celebrities (100M followers) — why naive fan-out breaks\n- What a Redis timeline cache looks like (data structure, TTL, what you store)\n- How tweets are stored in the primary database\n- The API design for paginated timeline fetching\n\nWe'll explore the hybrid approach, timeline merging, and media handling in follow-up questions.",
     "category": "Interview Prep",
     "difficulty": "Hard",
     "companies": [
@@ -444,7 +444,7 @@
     "id": "search-autocomplete",
     "title": "Search Autocomplete / Typeahead",
     "description": "Design the search suggestion system that shows autocomplete results as a user types, with < 100ms latency.",
-    "statement": "Design the search suggestion system that shows autocomplete results as a user types.\n\n**Scale:** 10M daily active searchers. 10 suggestions returned per prefix. P99 latency < 100ms. Suggestions based on trending searches + personalization. Update suggestions every hour.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Trie vs inverted index for prefix matching \u2014 which scales better and why\n- How you rank suggestions (frequency, trending boost, personalization)\n- How you cache prefix queries to handle 50M prefix lookups/day\n- How often you rebuild the suggestion index and how you handle hot trending searches\n- The pipeline from raw search logs to updated trie\n\nWe'll explore segmenting by language, Bloom filters, and the aggregation pipeline in follow-up questions.",
+    "statement": "Design the search suggestion system that shows autocomplete results as a user types.\n\n**Scale:** 10M daily active searchers. 10 suggestions returned per prefix. P99 latency < 100ms. Suggestions based on trending searches + personalization. Update suggestions every hour.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Trie vs inverted index for prefix matching — which scales better and why\n- How you rank suggestions (frequency, trending boost, personalization)\n- How you cache prefix queries to handle 50M prefix lookups/day\n- How often you rebuild the suggestion index and how you handle hot trending searches\n- The pipeline from raw search logs to updated trie\n\nWe'll explore segmenting by language, Bloom filters, and the aggregation pipeline in follow-up questions.",
     "category": "Interview Prep",
     "difficulty": "Hard",
     "companies": [
@@ -457,7 +457,7 @@
     "id": "youtube-netflix",
     "title": "YouTube / Netflix",
     "description": "Design a video streaming platform supporting upload, transcoding, and adaptive bitrate streaming to millions of concurrent viewers.",
-    "statement": "Design a video streaming platform supporting upload, transcoding, and adaptive bitrate streaming to millions of concurrent viewers.\n\n**Scale:** 500 hours of video uploaded per minute. 1B videos watched per day. Videos range from 100MB (mobile) to 50GB (4K raw). Global audience \u2014 latency < 2s to start playback.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How a 50GB video upload from a mobile phone on a flaky connection works (chunked upload, resumable)\n- The transcoding pipeline: who handles 500 hours of video per minute at scale\n- CDN strategy: push vs pull, edge node placement\n- Adaptive bitrate streaming (HLS/DASH): how the client decides which quality to request\n- The metadata storage for videos, user watch history, and view counts\n\nWe'll explore shot-based encoding, thumbnail generation, and CDN pre-warming for new releases in follow-up questions.",
+    "statement": "Design a video streaming platform supporting upload, transcoding, and adaptive bitrate streaming to millions of concurrent viewers.\n\n**Scale:** 500 hours of video uploaded per minute. 1B videos watched per day. Videos range from 100MB (mobile) to 50GB (4K raw). Global audience — latency < 2s to start playback.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How a 50GB video upload from a mobile phone on a flaky connection works (chunked upload, resumable)\n- The transcoding pipeline: who handles 500 hours of video per minute at scale\n- CDN strategy: push vs pull, edge node placement\n- Adaptive bitrate streaming (HLS/DASH): how the client decides which quality to request\n- The metadata storage for videos, user watch history, and view counts\n\nWe'll explore shot-based encoding, thumbnail generation, and CDN pre-warming for new releases in follow-up questions.",
     "category": "Interview Prep",
     "difficulty": "Hard",
     "companies": [
@@ -485,7 +485,7 @@
     "id": "whatsapp-chat",
     "title": "WhatsApp / Slack",
     "description": "Design a real-time messaging system supporting 1:1 and group chats with read receipts and offline delivery.",
-    "statement": "Design a real-time messaging system supporting 1:1 chats, group chats, read receipts, and offline message delivery.\n\n**Scale:** 1B daily active users (WhatsApp scale). 100B messages/day (1.16M messages/sec). Group chats up to 1024 members. At-least-once delivery. Offline users: store messages for up to 30 days.\n\n**Your task:** Create a high-level system design diagram and describe:\n- WebSocket connections: with 1B users, how many connection servers do you need and how are users assigned?\n- How a message from User A reaches User B who is connected to a different WebSocket server\n- Group message fan-out: 1 message \u2192 up to 1024 copies \u2014 how do you handle this efficiently?\n- Offline delivery: how do you store messages for offline users and deliver them when they reconnect?\n- End-to-end encryption: what does this mean for your server-side architecture?\n\nWe'll explore consistent hashing for connection servers, Redis pub/sub routing, and Cassandra for message storage in follow-up questions.",
+    "statement": "Design a real-time messaging system supporting 1:1 chats, group chats, read receipts, and offline message delivery.\n\n**Scale:** 1B daily active users (WhatsApp scale). 100B messages/day (1.16M messages/sec). Group chats up to 1024 members. At-least-once delivery. Offline users: store messages for up to 30 days.\n\n**Your task:** Create a high-level system design diagram and describe:\n- WebSocket connections: with 1B users, how many connection servers do you need and how are users assigned?\n- How a message from User A reaches User B who is connected to a different WebSocket server\n- Group message fan-out: 1 message → up to 1024 copies — how do you handle this efficiently?\n- Offline delivery: how do you store messages for offline users and deliver them when they reconnect?\n- End-to-end encryption: what does this mean for your server-side architecture?\n\nWe'll explore consistent hashing for connection servers, Redis pub/sub routing, and Cassandra for message storage in follow-up questions.",
     "category": "Interview Prep",
     "difficulty": "Hard",
     "companies": [
@@ -538,7 +538,7 @@
     "id": "recommendation-engine",
     "title": "Recommendation Engine",
     "description": "Design a product recommendation system for an e-commerce platform combining collaborative filtering with real-time signals.",
-    "statement": "Design a product recommendation system for an e-commerce platform (Flipkart/Amazon scale) combining collaborative filtering with real-time behavioral signals.\n\n**Scale:** 100M users, 10M products. Recommendations updated every 30 minutes. Real-time signal: last 3 actions within session boost relevance. Cold start: new users get editorial recommendations. P99 recommendation latency < 50ms.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Collaborative filtering: user-based vs item-based \u2014 which scales better to 100M users and why\n- How to compute recommendations without a 100M \u00d7 10M matrix factorization on every request\n- What a feature store is and why you need one for real-time ML inference\n- Two-stage ranking: offline batch (collaborative filtering) + online re-ranking (lightweight model)\n- How A/B testing works when you're running multiple recommendation algorithms simultaneously\n\nWe'll explore cold start solutions, session-based recommendations, and model monitoring in follow-up questions.",
+    "statement": "Design a product recommendation system for an e-commerce platform (Flipkart/Amazon scale) combining collaborative filtering with real-time behavioral signals.\n\n**Scale:** 100M users, 10M products. Recommendations updated every 30 minutes. Real-time signal: last 3 actions within session boost relevance. Cold start: new users get editorial recommendations. P99 recommendation latency < 50ms.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Collaborative filtering: user-based vs item-based — which scales better to 100M users and why\n- How to compute recommendations without a 100M × 10M matrix factorization on every request\n- What a feature store is and why you need one for real-time ML inference\n- Two-stage ranking: offline batch (collaborative filtering) + online re-ranking (lightweight model)\n- How A/B testing works when you're running multiple recommendation algorithms simultaneously\n\nWe'll explore cold start solutions, session-based recommendations, and model monitoring in follow-up questions.",
     "category": "Interview Prep",
     "difficulty": "Hard",
     "companies": [
@@ -564,7 +564,7 @@
     "id": "typeahead-search",
     "title": "Analytics Platform",
     "description": "Design an analytics platform that ingests clickstream events, processes them in real-time, and serves sub-second dashboard queries.",
-    "statement": "Design an analytics platform that ingests clickstream events from 100M users, processes them in real-time, and serves dashboards.\n\n**Scale:** 100M users \u00d7 10 events/session \u00d7 5 sessions/day = 5B events/day (57.8K events/sec). Real-time metrics update within 5 seconds. Historical queries over 2 years. Dashboard query latency < 1 second for last-day metrics.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Lambda architecture: batch layer + speed layer \u2014 where each shines\n- Kappa architecture: streaming only \u2014 when this makes more sense\n- How many Kafka partitions you need for 57.8K events/sec and how you partition\n- Pre-aggregation strategy: why compute hourly rollups rather than querying 5B raw events\n- Funnel analysis: how to track a user journey across up to 10 steps efficiently\n\nWe'll explore ClickHouse for OLAP, Flink for stream processing, and tiered data retention in follow-up questions.",
+    "statement": "Design an analytics platform that ingests clickstream events from 100M users, processes them in real-time, and serves dashboards.\n\n**Scale:** 100M users × 10 events/session × 5 sessions/day = 5B events/day (57.8K events/sec). Real-time metrics update within 5 seconds. Historical queries over 2 years. Dashboard query latency < 1 second for last-day metrics.\n\n**Your task:** Create a high-level system design diagram and describe:\n- Lambda architecture: batch layer + speed layer — where each shines\n- Kappa architecture: streaming only — when this makes more sense\n- How many Kafka partitions you need for 57.8K events/sec and how you partition\n- Pre-aggregation strategy: why compute hourly rollups rather than querying 5B raw events\n- Funnel analysis: how to track a user journey across up to 10 steps efficiently\n\nWe'll explore ClickHouse for OLAP, Flink for stream processing, and tiered data retention in follow-up questions.",
     "category": "Interview Prep",
     "difficulty": "Hard",
     "companies": [],
@@ -575,7 +575,7 @@
     "id": "mint-finance",
     "title": "Mint.com",
     "description": "Design a personal finance aggregation service connecting to banks, categorizing transactions, and tracking budgets.",
-    "statement": "Design a personal finance aggregation service that connects to banks, categorizes transactions, and tracks budgets.\n\n**Scale:** 10M users, each with 2\u20133 connected bank accounts. Poll bank APIs every hour for new transactions. Categorize transactions with < 5% error rate. Budget alerts within 5 minutes of threshold breach.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How you securely connect to banks (Plaid OAuth flow, token storage)\n- Transaction categorization: rule-based vs ML model \u2014 maintenance trade-offs\n- Polling 10M \u00d7 2.5 accounts hourly = 25M bank API calls/hour \u2014 how do you manage rate limits?\n- Where ACID transactions matter in this system vs where eventual consistency is acceptable\n- Budget alert delivery: how do you detect threshold breaches and notify in under 5 minutes?\n\nWe'll explore credential encryption, ML model retraining, and bank API failure handling in follow-up questions.",
+    "statement": "Design a personal finance aggregation service that connects to banks, categorizes transactions, and tracks budgets.\n\n**Scale:** 10M users, each with 2–3 connected bank accounts. Poll bank APIs every hour for new transactions. Categorize transactions with < 5% error rate. Budget alerts within 5 minutes of threshold breach.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How you securely connect to banks (Plaid OAuth flow, token storage)\n- Transaction categorization: rule-based vs ML model — maintenance trade-offs\n- Polling 10M × 2.5 accounts hourly = 25M bank API calls/hour — how do you manage rate limits?\n- Where ACID transactions matter in this system vs where eventual consistency is acceptable\n- Budget alert delivery: how do you detect threshold breaches and notify in under 5 minutes?\n\nWe'll explore credential encryption, ML model retraining, and bank API failure handling in follow-up questions.",
     "category": "Interview Prep",
     "difficulty": "Hard",
     "companies": [],
@@ -585,8 +585,8 @@
   {
     "id": "fb-sales-rank",
     "title": "Real-Time Leaderboard",
-    "description": "Design Amazon/Flipkart's bestseller ranking feature \u2014 near-real-time product rankings by category with Big Billion Day scale.",
-    "statement": "Design Amazon/Flipkart's bestseller ranking feature \u2014 compute and display product rankings by category updated in near-real-time.\n\n**Scale:** 10M products across 1000 categories. Rankings updated every minute. Top 100 per category surfaced to users. During Big Billion Day: 50K orders/sec.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How Redis sorted sets (ZINCRBY) can power real-time rankings and the throughput they support\n- Whether you need per-minute, per-hour, or per-day accuracy \u2014 and how the answer changes the architecture\n- How you combine historical sales rank + recent sales velocity into a single score\n- At 1000 categories \u00d7 10M products, what is the Redis memory footprint and how do you manage it?\n- How rankings are exposed via API with appropriate caching\n\nWe'll explore sliding window velocity computation, Kafka order events, and weekly Spark batch jobs in follow-up questions.",
+    "description": "Design Amazon/Flipkart's bestseller ranking feature — near-real-time product rankings by category with Big Billion Day scale.",
+    "statement": "Design Amazon/Flipkart's bestseller ranking feature — compute and display product rankings by category updated in near-real-time.\n\n**Scale:** 10M products across 1000 categories. Rankings updated every minute. Top 100 per category surfaced to users. During Big Billion Day: 50K orders/sec.\n\n**Your task:** Create a high-level system design diagram and describe:\n- How Redis sorted sets (ZINCRBY) can power real-time rankings and the throughput they support\n- Whether you need per-minute, per-hour, or per-day accuracy — and how the answer changes the architecture\n- How you combine historical sales rank + recent sales velocity into a single score\n- At 1000 categories × 10M products, what is the Redis memory footprint and how do you manage it?\n- How rankings are exposed via API with appropriate caching\n\nWe'll explore sliding window velocity computation, Kafka order events, and weekly Spark batch jobs in follow-up questions.",
     "category": "Interview Prep",
     "difficulty": "Hard",
     "companies": [
@@ -779,7 +779,7 @@
     ],
     "type": "behavioral",
     "timeMinutes": 20,
-    "statement": "Tell me about a time you disagreed with a technical decision \u2014 whether from your team, a peer, or leadership.\n\nWalk me through: the decision, why you disagreed, how you raised it, and what happened.\n\nI will probe on how you handled it when you were overruled, and how you maintained a working relationship."
+    "statement": "Tell me about a time you disagreed with a technical decision — whether from your team, a peer, or leadership.\n\nWalk me through: the decision, why you disagreed, how you raised it, and what happened.\n\nI will probe on how you handled it when you were overruled, and how you maintained a working relationship."
   },
   {
     "id": "ambiguous-problem",
@@ -840,7 +840,7 @@
     ],
     "type": "behavioral",
     "timeMinutes": 20,
-    "statement": "Tell me about a significant professional failure \u2014 something where the outcome was bad and you were responsible.\n\nWalk me through: what happened, your role in it, the impact, and what you learned and changed.\n\nI will probe on ownership, self-awareness, and the concrete changes you made."
+    "statement": "Tell me about a significant professional failure — something where the outcome was bad and you were responsible.\n\nWalk me through: what happened, your role in it, the impact, and what you learned and changed.\n\nI will probe on ownership, self-awareness, and the concrete changes you made."
   },
   {
     "id": "influence-without-authority",
@@ -875,7 +875,7 @@
   {
     "id": "scaling-challenge",
     "title": "Scaling a System or Team",
-    "description": "Describe a time you had to scale something \u2014 a system, a team, or a process \u2014 that was not ready to scale.",
+    "description": "Describe a time you had to scale something — a system, a team, or a process — that was not ready to scale.",
     "category": "Behavioral",
     "difficulty": "Hard",
     "companies": [
@@ -885,6 +885,94 @@
     ],
     "type": "behavioral",
     "timeMinutes": 20,
-    "statement": "Tell me about a time you had to scale something \u2014 a technical system, a team, or a process \u2014 that was not designed for the load it needed to handle.\n\nWalk me through: the situation, what the breaking points were, what you did, and the outcome.\n\nI will probe on the trade-offs you made and what you would do differently."
+    "statement": "Tell me about a time you had to scale something — a technical system, a team, or a process — that was not designed for the load it needed to handle.\n\nWalk me through: the situation, what the breaking points were, what you did, and the outcome.\n\nI will probe on the trade-offs you made and what you would do differently."
+  },
+  {
+    "id": "test-file-upload-api",
+    "title": "Test a File Upload API",
+    "description": "Design a test strategy for an API endpoint that accepts file uploads (images, documents) and stores them.",
+    "statement": "You're asked to test a REST endpoint `POST /upload` that accepts a file (images and PDFs), validates it, and stores it in object storage, returning a URL.\n\n**Your task:** Walk through how you'd test this end to end — scope and assumptions, the test cases you'd write (positive, negative, boundary), how you'd automate it, and what non-functional and quality concerns matter. Be concrete: give actual inputs and expected results, not just categories.",
+    "category": "SDET / Test Design",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "sdet_test_design",
+    "timeMinutes": 30
+  },
+  {
+    "id": "test-login-auth-flow",
+    "title": "Test a Login / Authentication Flow",
+    "description": "Design test coverage for a username/password login with session handling and lockout.",
+    "statement": "A web app has a login flow: username + password, session cookie on success, account lockout after repeated failures, and a 'forgot password' path.\n\n**Your task:** Lay out how you'd test it — functional, negative, boundary, and security cases — plus your automation approach and which non-functional aspects (performance, security) you'd cover. Give concrete inputs and expected outcomes.",
+    "category": "SDET / Test Design",
+    "difficulty": "Easy",
+    "companies": [],
+    "type": "sdet_test_design",
+    "timeMinutes": 25
+  },
+  {
+    "id": "test-vending-machine",
+    "title": "Test a Vending Machine",
+    "description": "The classic: design test cases for a vending machine that takes coins and dispenses items.",
+    "statement": "A vending machine accepts coins, lets a user select an item, dispenses it, and returns change. It tracks inventory.\n\n**Your task:** Enumerate how you'd test it — happy paths, edge cases (exact change, insufficient funds, out of stock, simultaneous selection), and state transitions. Then describe how you'd automate this and what would be hardest to test reliably.",
+    "category": "SDET / Test Design",
+    "difficulty": "Easy",
+    "companies": [],
+    "type": "sdet_test_design",
+    "timeMinutes": 25
+  },
+  {
+    "id": "test-surge-pricing",
+    "title": "Test a Ride-Sharing Surge Pricing Service",
+    "description": "Design a test strategy for a service that computes dynamic surge multipliers from demand and supply.",
+    "statement": "A ride-sharing service computes a surge multiplier per region from real-time demand (riders) and supply (drivers), updating every few seconds and feeding the fare calculator.\n\n**Your task:** Design the test strategy — how you'd scope it, the levels of testing you'd apply, concrete cases (including boundary multipliers, stale data, region edge cases, concurrency), how you'd automate it without a live fleet, and the non-functional and quality-gate concerns. This one is hard on purpose; show risk-based prioritization.",
+    "category": "SDET / Test Design",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "sdet_test_design",
+    "timeMinutes": 40
+  },
+  {
+    "id": "test-payment-checkout",
+    "title": "Test a Payment Checkout",
+    "description": "Design test coverage for an e-commerce checkout that charges a card and creates an order.",
+    "statement": "An e-commerce checkout takes a cart, applies discounts and tax, charges a payment gateway, and creates an order. Payment can succeed, fail, or time out; orders must never be double-charged.\n\n**Your task:** Walk through testing this — functional and negative cases, boundary and idempotency concerns, how you'd handle the external payment gateway in tests (mocking/sandbox), and the non-functional, security, and quality-gate aspects. Be concrete about inputs and expected results.",
+    "category": "SDET / Test Design",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "sdet_test_design",
+    "timeMinutes": 40
+  },
+  {
+    "id": "design-ui-test-framework",
+    "title": "Design a UI Test Automation Framework",
+    "description": "Architect a maintainable, extensible UI automation framework for a web application.",
+    "statement": "Design a UI test automation framework for a multi-page web app (Selenium or Playwright — your choice).\n\n**Your task:** Architect the framework — its layering (page/test/driver), the base classes and core abstractions, the design patterns you'd apply, how a new page object and a new test are added, how you keep tests deterministic and parallel-safe, and how it plugs into CI with reporting. Write the key classes in the editor; be concrete about names, methods, and relationships.",
+    "category": "SDET / Framework Design",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "sdet_framework_design",
+    "timeMinutes": 40
+  },
+  {
+    "id": "design-api-test-framework",
+    "title": "Design an API Test Framework",
+    "description": "Architect a reusable framework for testing REST/GraphQL APIs.",
+    "statement": "Design a test automation framework for a service's REST (and possibly GraphQL) APIs.\n\n**Your task:** Lay out the architecture — request builders, response/schema validation, auth handling, test data management, and config across environments. Cover the patterns you'd use, how a new endpoint's tests are added, contract testing, and CI integration with reporting. Make the core classes concrete in the editor.",
+    "category": "SDET / Framework Design",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "sdet_framework_design",
+    "timeMinutes": 35
+  },
+  {
+    "id": "design-mobile-test-framework",
+    "title": "Design a Mobile Test Automation Framework",
+    "description": "Architect a cross-platform mobile automation framework (Appium).",
+    "statement": "Design a mobile test automation framework that targets both Android and iOS (e.g. with Appium).\n\n**Your task:** Architect it for cross-platform reuse — the layering, how you abstract platform differences (a strategy per platform), driver/session management, the page/screen object model, flaky-wait handling, parallel device execution, and CI on a device farm. Put the key abstractions in the editor and justify your pattern choices.",
+    "category": "SDET / Framework Design",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "sdet_framework_design",
+    "timeMinutes": 40
   }
 ]

@@ -1,8 +1,9 @@
 import type { InterviewType, ReshadeScore, Verdict } from "./types";
 
-// Each RESHADED-style dimension is scored 0-2 unless the stored record says
-// otherwise. Totals differ by interview type (SD = 7 dims/14, LLD & behavioral
-// = 5 dims/10), so we always derive the max from the scores rather than assume.
+// Dimensions are scored 0-3, but each stored record carries its own per-dimension
+// `max`, so totals are always derived from the scores rather than assumed. Legacy
+// sessions were scored 0-2 and carry max:2; this default only applies to the rare
+// record with no stored max at all — treat those as the old 0-2 scale.
 const DIM_MAX_DEFAULT = 2;
 
 /** One completed, scored session — the unit all analytics aggregate over. */

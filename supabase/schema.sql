@@ -43,7 +43,7 @@ create table if not exists public.interview_sessions (
   id              uuid primary key default gen_random_uuid(),
   user_id         uuid not null references auth.users(id) on delete cascade,
   problem_id      text not null,
-  interview_type  text not null check (interview_type in ('system_design', 'lld', 'behavioral')),
+  interview_type  text not null check (interview_type in ('system_design', 'lld', 'behavioral', 'sdet_test_design', 'sdet_framework_design')),
   difficulty      text not null check (difficulty in ('Easy', 'Medium', 'Hard')),
   target_level    text not null default 'senior' check (target_level in ('mid', 'senior', 'staff')),
   status          text not null default 'active' check (status in ('active', 'completed')),

@@ -1,9 +1,11 @@
+import "./load-env.mjs";
 import { chromium } from "playwright";
 
 const BASE = process.argv[2] || "http://127.0.0.1:4500";
 const PROBLEM = process.argv[3] || "parking-lot";
-const EMAIL = process.env.IB_EMAIL || "***REDACTED***";
-const PASSWORD = process.env.IB_PASSWORD || "***REDACTED***";
+const EMAIL = process.env.IB_EMAIL;
+const PASSWORD = process.env.IB_PASSWORD;
+if (!EMAIL || !PASSWORD) { console.error("Set IB_EMAIL and IB_PASSWORD env vars to run this script."); process.exit(1); }
 const log = (...a) => console.log("[lld]", ...a);
 
 const CODE = `import java.util.*;

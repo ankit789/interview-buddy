@@ -2,7 +2,37 @@ import { createClient } from "@/lib/supabase/server";
 import { getProblemById } from "@/lib/problems";
 import { buildInterviewerSystemPrompt, detectPhaseFromMessages } from "@/lib/prompts";
 import { isAskingForAnswer } from "@/lib/interview-signals";
+import { summarizeCanvas, extractCode } from "@/lib/artifact-summary";
 import { streamChat, keysFromSettings, NoProviderError } from "@/lib/llm";
+
+// The candidate's code can be long; cap what we feed into each live interviewer turn so the
+// prompt stays bounded while still giving the interviewer the real structure to probe.
+const LIVE_CODE_MAX = 6000;
+
+// Build a "you can see this" snapshot of the candidate's whiteboard + code editor so the
+// interviewer can reference the actual artifact instead of asking them to describe it.
+function buildWorkspaceContext(
+  canvasState: Record<string, unknown> | null,
+  codeState: Record<string, unknown> | null
+): string {
+  const parts: string[] = [];
+  const canvas = summarizeCanvas(canvasState);
+  if (canvas) parts.push(`WHITEBOARD (the candidate's current diagram): ${canvas}`);
+  const code = extractCode(codeState);
+  if (code) {
+    const shown =
+      code.code.length > LIVE_CODE_MAX
+        ? code.code.slice(0, LIVE_CODE_MAX) + "\n… (truncated — more below the cutoff)"
+        : code.code;
+    parts.push(
+      `CODE EDITOR (${code.language}) — the candidate's current code:\n\`\`\`${code.language}\n${shown}\n\`\`\``
+    );
+  }
+  if (parts.length === 0) return "";
+  return `\n\nLIVE WORKSPACE — you can SEE the candidate's whiteboard and code editor right now. Reference what is actually there: probe specific components/classes they drew or wrote, point at gaps, and challenge their choices. Do NOT ask them to describe what you can already see.\n\n${parts.join(
+    "\n\n"
+  )}`;
+}
 
 export async function POST(req: Request) {
   const supabase = await createClient();
@@ -63,11 +93,12 @@ export async function POST(req: Request) {
     message_type: isHint ? "hint" : "chat",
   });
 
-  const systemPrompt = buildInterviewerSystemPrompt(
-    problem,
-    session.interview_type,
-    session.target_level ?? "senior"
-  );
+  const systemPrompt =
+    buildInterviewerSystemPrompt(
+      problem,
+      session.interview_type,
+      session.target_level ?? "senior"
+    ) + buildWorkspaceContext(session.canvas_state, session.code_state);
 
   let stream;
   try {
