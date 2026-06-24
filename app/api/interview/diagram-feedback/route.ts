@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getProblemById } from "@/lib/problems";
 import { buildDiagramFeedbackPrompt } from "@/lib/prompts";
+import { decryptSettings } from "@/lib/crypto";
 import Anthropic from "@anthropic-ai/sdk";
 
 export async function POST(req: Request) {
@@ -30,7 +31,7 @@ export async function POST(req: Request) {
     .eq("user_id", user.id)
     .single();
 
-  const apiKey = settings?.anthropic_api_key;
+  const apiKey = decryptSettings(settings)?.anthropic_api_key;
   if (!apiKey) {
     return Response.json(
       { error: "Anthropic API key not configured. Go to Settings to add it." },

@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { createClient } from "@/lib/supabase/server";
+import { decryptSettings } from "@/lib/crypto";
 
 // Voice synthesis with provider fallback:
 //   1. Google Cloud TTS (Neural2) — most generous free tier, best quality
@@ -72,12 +73,13 @@ export async function POST(req: Request) {
     return new Response("Bad request", { status: 400 });
   }
 
-  const { data: settings } = await supabase
+  const { data: rawSettings } = await supabase
     .from("user_settings")
     .select("google_tts_api_key, groq_api_key")
     .eq("user_id", user.id)
     .single();
 
+  const settings = decryptSettings(rawSettings);
   const googleKey = settings?.google_tts_api_key ?? process.env.GOOGLE_TTS_API_KEY;
   const groqKey = settings?.groq_api_key ?? process.env.GROQ_API_KEY;
 

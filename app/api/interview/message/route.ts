@@ -3,6 +3,7 @@ import { getProblemById } from "@/lib/problems";
 import { buildInterviewerSystemPrompt, detectPhaseFromMessages } from "@/lib/prompts";
 import { isAskingForAnswer } from "@/lib/interview-signals";
 import { summarizeCanvas, extractCode } from "@/lib/artifact-summary";
+import { decryptSettings } from "@/lib/crypto";
 import { streamChat, keysFromSettings, NoProviderError } from "@/lib/llm";
 
 // The candidate's code can be long; cap what we feed into each live interviewer turn so the
@@ -63,7 +64,7 @@ export async function POST(req: Request) {
     .eq("user_id", user.id)
     .single();
 
-  const keys = keysFromSettings(settings);
+  const keys = keysFromSettings(decryptSettings(settings));
 
   // Fetch message history
   const { data: history } = await supabase

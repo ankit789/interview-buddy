@@ -8,6 +8,7 @@ import {
 } from "@/lib/interview-signals";
 import { complete, keysFromSettings, NoProviderError } from "@/lib/llm";
 import { summarizeCanvas, extractCode } from "@/lib/artifact-summary";
+import { decryptSettings } from "@/lib/crypto";
 import type { Verdict } from "@/lib/types";
 
 export async function POST(req: Request) {
@@ -37,7 +38,7 @@ export async function POST(req: Request) {
     .eq("user_id", user.id)
     .single();
 
-  const keys = keysFromSettings(settings);
+  const keys = keysFromSettings(decryptSettings(settings));
 
   const { data: messages } = await supabase
     .from("interview_messages")
