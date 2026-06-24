@@ -12,8 +12,9 @@ import fs from "node:fs";
 const LEVEL = (process.argv[2] || "senior").toLowerCase();
 const PROBLEM = process.argv[3] || "rate-limiter";
 const BASE = process.argv[4] || "http://127.0.0.1:4500";
-const EMAIL = process.env.IB_EMAIL || "***REDACTED***";
-const PASSWORD = process.env.IB_PASSWORD || "***REDACTED***";
+const EMAIL = process.env.IB_EMAIL;
+const PASSWORD = process.env.IB_PASSWORD;
+if (!EMAIL || !PASSWORD) { console.error("Set IB_EMAIL and IB_PASSWORD env vars to run this script."); process.exit(1); }
 const SHOTS = `/tmp/ib-shots`;
 fs.mkdirSync(SHOTS, { recursive: true });
 const log = (...a) => console.log(new Date().toISOString().slice(11, 19), ...a);
