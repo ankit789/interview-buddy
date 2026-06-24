@@ -129,7 +129,7 @@ export function assembleEvalPrompt(
   const scoresJson = rubric
     .map(
       (d) =>
-        `    { "letter": "${d.letter}", "label": "${d.label}", "score": <0-3>, "evidence": "<one sentence from transcript>", "gap": "<what was missing or weak>" }`
+        `    { "letter": "${d.letter}", "label": "${d.label}", "score": <0-3>, "evidence": "<one sentence from transcript>", "gap": "<what was missing or weak, or \\"\\" if nothing material was missing>" }`
     )
     .join(",\n");
   const verdictGuide = `Verdict guide: 0-${verdict.notReadyMax} = Not Ready, ${
@@ -161,6 +161,12 @@ ${scoresJson}
 }
 
 ${scenario.scoringGuide}
+
+GAP–SCORE CONSISTENCY (applies to EVERY dimension — enforce strictly):
+The "gap" you write and the "score" must agree. The top score (3) means "exceptional, with nothing material missing at the target level". Therefore:
+- If you identify a real, substantive gap for a dimension, that dimension CANNOT score 3 — cap it at 2 ("solid, but with a gap"). A "no evidence of X" / "only verbal, not implemented" / "didn't cover X" note is a substantive gap.
+- Only award 3 when the dimension is genuinely gap-free at the target level; set "gap": "" in that case.
+- Do not give every dimension the same score. Differentiate based on what the candidate actually demonstrated versus what they merely mentioned.
 
 ${verdictGuide}`;
 }
