@@ -162,6 +162,9 @@ ${scoresJson}
 
 ${scenario.scoringGuide}
 
+ENGAGEMENT & DEPTH UNDER PROBING (weigh this in scoring):
+Assess whether the candidate actually ANSWERED the interviewer's direct follow-up questions and went deeper when pushed — versus reciting prepared material, listing categories, or changing the subject. When the interviewer asked a pointed follow-up (e.g. "show me the code", "give the exact boundary value", "why that choice?", "what happens under X?") and the candidate did NOT engage with it, that is a real weakness: do not credit the unaddressed topic, score the relevant dimension lower, and name it in "missed". A candidate who is responsive and sharpens specifics under pressure should score higher than one who monologues prepared content while ignoring what they were asked.
+
 GAP–SCORE CONSISTENCY (applies to EVERY dimension — enforce strictly):
 The "gap" you write and the "score" must agree. The top score (3) means "exceptional, with nothing material missing at the target level". Therefore:
 - If you identify a real, substantive gap for a dimension, that dimension CANNOT score 3 — cap it at 2 ("solid, but with a gap"). A "no evidence of X" / "only verbal, not implemented" / "didn't cover X" note is a substantive gap.

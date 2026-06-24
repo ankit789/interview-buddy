@@ -26,6 +26,8 @@ const TURN_CAP: Record<string, number> = {
   system_design: 30,
   lld: 22,
   behavioral: 14,
+  sdet_test_design: 22,
+  sdet_framework_design: 22,
 };
 
 const keys = {

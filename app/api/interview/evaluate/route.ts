@@ -7,51 +7,8 @@ import {
   type SignalMessage,
 } from "@/lib/interview-signals";
 import { complete, keysFromSettings, NoProviderError } from "@/lib/llm";
+import { summarizeCanvas, extractCode } from "@/lib/artifact-summary";
 import type { Verdict } from "@/lib/types";
-
-// Turn the stored Excalidraw canvas into a short text summary the LLM evaluator can read:
-// component labels + how many boxes/connections. Lets the diagram count toward the score.
-function summarizeCanvas(canvasState: Record<string, unknown> | null): string | null {
-  const elements = canvasState?.elements as
-    | { type?: string; text?: string; isDeleted?: boolean }[]
-    | undefined;
-  if (!Array.isArray(elements) || elements.length === 0) return null;
-
-  const labels: string[] = [];
-  let shapes = 0;
-  let arrows = 0;
-  for (const el of elements) {
-    if (!el || el.isDeleted) continue;
-    const t = el.text?.trim();
-    if (el.type === "text") {
-      if (t) labels.push(t);
-    } else if (el.type === "arrow" || el.type === "line") {
-      arrows++;
-    } else if (el.type === "rectangle" || el.type === "ellipse" || el.type === "diamond") {
-      shapes++;
-      if (t) labels.push(t);
-    }
-  }
-  const cleanLabels = [...new Set(labels.filter(Boolean))];
-  if (shapes === 0 && arrows === 0 && cleanLabels.length === 0) return null;
-  return `The candidate drew an architecture diagram: ${shapes} component box(es) and ${arrows} connection(s)/arrow(s). Labeled components: ${
-    cleanLabels.length ? cleanLabels.join(", ") : "(none labeled)"
-  }. Judge whether the right components are present, connected, and the data flow is coherent.`;
-}
-
-// Render the LLD code the candidate wrote so the evaluator scores the actual
-// class design, not just the chat description of it.
-function summarizeCode(codeState: Record<string, unknown> | null): string | null {
-  const code = (codeState?.code as string | undefined)?.trim();
-  if (!code) return null;
-  // Ignore an untouched starter (just the seed comment, no real declarations).
-  const meaningful = code
-    .split("\n")
-    .filter((l) => l.trim() && !l.trim().startsWith("//") && !l.trim().startsWith("#"));
-  if (meaningful.length === 0) return null;
-  const language = (codeState?.language as string | undefined) ?? "code";
-  return `[CANDIDATE'S CODE — ${language}]\n\`\`\`${language}\n${code}\n\`\`\``;
-}
 
 export async function POST(req: Request) {
   const supabase = await createClient();
@@ -97,13 +54,13 @@ export async function POST(req: Request) {
   // Include a textual summary of the candidate's whiteboard so the evaluator judges the
   // actual diagram (components + connections), not just the chat transcript.
   const canvasSummary = summarizeCanvas(session.canvas_state);
-  const codeSummary = summarizeCode(session.code_state);
+  const codeArtifact = extractCode(session.code_state);
   let transcript = transcriptBody;
   if (canvasSummary) {
-    transcript += `\n\n[CANDIDATE'S WHITEBOARD DIAGRAM]\n${canvasSummary}`;
+    transcript += `\n\n[CANDIDATE'S WHITEBOARD DIAGRAM]\nThe candidate drew an architecture diagram: ${canvasSummary} Judge whether the right components are present, connected, and the data flow is coherent.`;
   }
-  if (codeSummary) {
-    transcript += `\n\n${codeSummary}`;
+  if (codeArtifact) {
+    transcript += `\n\n[CANDIDATE'S CODE — ${codeArtifact.language}]\n\`\`\`${codeArtifact.language}\n${codeArtifact.code}\n\`\`\``;
   }
 
   // Compute behavioral interaction signals from the session

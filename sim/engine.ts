@@ -1,5 +1,6 @@
 import type { Problem, Verdict, InterviewLevel } from "@/lib/types";
 import { buildInterviewerSystemPrompt, buildEvaluationPrompt } from "@/lib/prompts";
+import { getScenario } from "@/lib/scenarios";
 import {
   computeSignals,
   applyVerdictGuardrails,
@@ -169,7 +170,7 @@ export async function runSimulation(
   level: InterviewLevel = "senior"
 ): Promise<SimResult> {
   const interviewerSystem = buildInterviewerSystemPrompt(problem, problem.type, level);
-  const candidateSystem = persona.systemPrompt(problem);
+  const candidateSystem = persona.systemPrompt(problem, getScenario(problem.type));
 
   const transcript: SimMessage[] = [];
   const interviewerFlags: string[] = [];
