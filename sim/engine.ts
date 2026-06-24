@@ -360,7 +360,12 @@ export async function runSimulation(
     transcript,
     signals,
     evaluation: {
-      scores: parsed.scores ?? [],
+      // Stamp per-dimension max (the evaluator JSON omits it) exactly like the production
+      // evaluate route, so totals render against the right denominator (e.g. 18/18, not 18/12).
+      scores: ((parsed.scores ?? []) as Record<string, unknown>[]).map((s) => ({
+        ...s,
+        max: typeof s.max === "number" ? s.max : 3,
+      })) as SimEvaluation["scores"],
       total: parsed.total ?? 0,
       verdict,
       rawVerdict,
