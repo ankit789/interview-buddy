@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
 import { Eye, EyeOff, Check, Loader2, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getKeyStatus, saveKeys, type KeyStatus } from "./actions";
 
 interface Keys {
   mistral_api_key: string;
@@ -21,6 +21,15 @@ const EMPTY: Keys = {
   gemini_api_key: "",
   anthropic_api_key: "",
   google_tts_api_key: "",
+};
+
+const EMPTY_STATUS: KeyStatus = {
+  mistral_api_key: false,
+  cerebras_api_key: false,
+  groq_api_key: false,
+  gemini_api_key: false,
+  anthropic_api_key: false,
+  google_tts_api_key: false,
 };
 
 // Interview providers, in the order the app falls back through them.
@@ -63,6 +72,7 @@ const PROVIDER_FIELDS: {
 
 export function SettingsForm() {
   const [keys, setKeys] = useState<Keys>(EMPTY);
+  const [status, setStatus] = useState<KeyStatus>(EMPTY_STATUS);
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -70,28 +80,9 @@ export function SettingsForm() {
   const [shown, setShown] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    async function load() {
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) { setLoading(false); return; }
-      const { data } = await supabase
-        .from("user_settings")
-        .select("mistral_api_key, cerebras_api_key, groq_api_key, gemini_api_key, anthropic_api_key, google_tts_api_key")
-        .eq("user_id", user.id)
-        .single();
-      if (data) {
-        setKeys({
-          mistral_api_key: data.mistral_api_key ?? "",
-          cerebras_api_key: data.cerebras_api_key ?? "",
-          groq_api_key: data.groq_api_key ?? "",
-          gemini_api_key: data.gemini_api_key ?? "",
-          anthropic_api_key: data.anthropic_api_key ?? "",
-          google_tts_api_key: data.google_tts_api_key ?? "",
-        });
-      }
-      setLoading(false);
-    }
-    load();
+    getKeyStatus()
+      .then(setStatus)
+      .finally(() => setLoading(false));
   }, []);
 
   async function save(e: React.FormEvent) {
@@ -99,25 +90,21 @@ export function SettingsForm() {
     setSaving(true);
     setError(null);
     setSaved(false);
-    const supabase = createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user) { setError("Not authenticated"); setSaving(false); return; }
 
-    const trimmed = (v: string) => v.trim() || null;
-    const { error } = await supabase.from("user_settings").upsert({
-      user_id: user.id,
-      mistral_api_key: trimmed(keys.mistral_api_key),
-      cerebras_api_key: trimmed(keys.cerebras_api_key),
-      groq_api_key: trimmed(keys.groq_api_key),
-      gemini_api_key: trimmed(keys.gemini_api_key),
-      anthropic_api_key: trimmed(keys.anthropic_api_key),
-      google_tts_api_key: trimmed(keys.google_tts_api_key),
-    }, { onConflict: "user_id" });
+    // Only send fields the user actually typed; empty fields leave the stored key untouched.
+    const input: Partial<Keys> = {};
+    (Object.keys(keys) as (keyof Keys)[]).forEach((k) => {
+      const v = keys[k].trim();
+      if (v) input[k] = v;
+    });
 
+    const { error } = await saveKeys(input);
     if (error) {
-      setError(error.message);
+      setError(error);
     } else {
       setSaved(true);
+      setKeys(EMPTY); // clear typed secrets from the form
+      setStatus(await getKeyStatus());
       setTimeout(() => setSaved(false), 3000);
     }
     setSaving(false);
@@ -139,12 +126,16 @@ export function SettingsForm() {
         Add a key for any of the interview providers below. The app tries them in order
         (<span className="font-medium text-foreground">Mistral → Cerebras → Groq → Gemini</span>) and
         automatically falls back to the next when one hits its quota. One key is enough to start.
+        Keys are encrypted before storage and never shown back to you — enter a new value to replace one.
       </div>
 
       {PROVIDER_FIELDS.map((field) => (
         <fieldset key={field.key} className="space-y-3">
           <div className="space-y-1">
-            <legend className="text-sm font-medium">{field.label}</legend>
+            <legend className="text-sm font-medium flex items-center gap-2">
+              {field.label}
+              {status[field.key] && <ConfiguredBadge />}
+            </legend>
             <p className="text-xs text-muted-foreground">
               {field.blurb}{" "}
               <a
@@ -163,13 +154,17 @@ export function SettingsForm() {
             show={!!shown[field.key]}
             onToggle={() => toggle(field.key)}
             placeholder={field.placeholder}
+            configured={status[field.key]}
           />
         </fieldset>
       ))}
 
       <fieldset className="space-y-3 border-t border-border pt-6">
         <div className="space-y-1">
-          <legend className="text-sm font-medium">Anthropic API Key</legend>
+          <legend className="text-sm font-medium flex items-center gap-2">
+            Anthropic API Key
+            {status.anthropic_api_key && <ConfiguredBadge />}
+          </legend>
           <p className="text-xs text-muted-foreground">
             Powers diagram feedback only (Claude Sonnet 4.6). Optional — chat and evaluation use the providers above.{" "}
             <a
@@ -188,12 +183,16 @@ export function SettingsForm() {
           show={!!shown.anthropic_api_key}
           onToggle={() => toggle("anthropic_api_key")}
           placeholder="sk-ant-…"
+          configured={status.anthropic_api_key}
         />
       </fieldset>
 
       <fieldset className="space-y-3 border-t border-border pt-6">
         <div className="space-y-1">
-          <legend className="text-sm font-medium">Google Cloud TTS Key</legend>
+          <legend className="text-sm font-medium flex items-center gap-2">
+            Google Cloud TTS Key
+            {status.google_tts_api_key && <ConfiguredBadge />}
+          </legend>
           <p className="text-xs text-muted-foreground">
             The interviewer&apos;s voice in voice mode (Google Neural2). Optional — without it,
             voice mode falls back to Groq, then your browser&apos;s built-in voice. Needs the
@@ -214,6 +213,7 @@ export function SettingsForm() {
           show={!!shown.google_tts_api_key}
           onToggle={() => toggle("google_tts_api_key")}
           placeholder="AIza…"
+          configured={status.google_tts_api_key}
         />
       </fieldset>
 
@@ -235,14 +235,23 @@ export function SettingsForm() {
   );
 }
 
+function ConfiguredBadge() {
+  return (
+    <span className="inline-flex items-center gap-1 font-mono text-[10px] uppercase tracking-widest text-[oklch(0.68_0.18_145)] border border-[oklch(0.68_0.18_145)]/30 rounded px-1.5 py-0.5">
+      <Check className="w-3 h-3" /> Configured
+    </span>
+  );
+}
+
 function KeyInput({
-  value, onChange, show, onToggle, placeholder,
+  value, onChange, show, onToggle, placeholder, configured,
 }: {
   value: string;
   onChange: (v: string) => void;
   show: boolean;
   onToggle: () => void;
   placeholder: string;
+  configured?: boolean;
 }) {
   return (
     <div className="relative">
@@ -250,7 +259,7 @@ function KeyInput({
         type={show ? "text" : "password"}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
+        placeholder={configured ? "•••••••••• — enter a new key to replace" : placeholder}
         autoComplete="off"
         spellCheck={false}
         className={cn(
