@@ -941,5 +941,38 @@
     "companies": [],
     "type": "sdet_test_design",
     "timeMinutes": 40
+  },
+  {
+    "id": "design-ui-test-framework",
+    "title": "Design a UI Test Automation Framework",
+    "description": "Architect a maintainable, extensible UI automation framework for a web application.",
+    "statement": "Design a UI test automation framework for a multi-page web app (Selenium or Playwright — your choice).\n\n**Your task:** Architect the framework — its layering (page/test/driver), the base classes and core abstractions, the design patterns you'd apply, how a new page object and a new test are added, how you keep tests deterministic and parallel-safe, and how it plugs into CI with reporting. Write the key classes in the editor; be concrete about names, methods, and relationships.",
+    "category": "SDET / Framework Design",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "sdet_framework_design",
+    "timeMinutes": 40
+  },
+  {
+    "id": "design-api-test-framework",
+    "title": "Design an API Test Framework",
+    "description": "Architect a reusable framework for testing REST/GraphQL APIs.",
+    "statement": "Design a test automation framework for a service's REST (and possibly GraphQL) APIs.\n\n**Your task:** Lay out the architecture — request builders, response/schema validation, auth handling, test data management, and config across environments. Cover the patterns you'd use, how a new endpoint's tests are added, contract testing, and CI integration with reporting. Make the core classes concrete in the editor.",
+    "category": "SDET / Framework Design",
+    "difficulty": "Medium",
+    "companies": [],
+    "type": "sdet_framework_design",
+    "timeMinutes": 35
+  },
+  {
+    "id": "design-mobile-test-framework",
+    "title": "Design a Mobile Test Automation Framework",
+    "description": "Architect a cross-platform mobile automation framework (Appium).",
+    "statement": "Design a mobile test automation framework that targets both Android and iOS (e.g. with Appium).\n\n**Your task:** Architect it for cross-platform reuse — the layering, how you abstract platform differences (a strategy per platform), driver/session management, the page/screen object model, flaky-wait handling, parallel device execution, and CI on a device farm. Put the key abstractions in the editor and justify your pattern choices.",
+    "category": "SDET / Framework Design",
+    "difficulty": "Hard",
+    "companies": [],
+    "type": "sdet_framework_design",
+    "timeMinutes": 40
   }
 ]

@@ -2,7 +2,8 @@ export type InterviewType =
   | "system_design"
   | "lld"
   | "behavioral"
-  | "sdet_test_design";
+  | "sdet_test_design"
+  | "sdet_framework_design";
 export type InterviewLevel = "mid" | "senior" | "staff";
 export type Difficulty = "Easy" | "Medium" | "Hard";
 export type SessionStatus = "active" | "completed";
