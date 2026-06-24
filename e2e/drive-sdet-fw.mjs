@@ -1,6 +1,7 @@
 // End-to-end SDET framework-design interview: senior-level conversation across the
 // five framework phases + writes a real POM framework skeleton in the code editor,
 // then ends & evaluates. Confirms the FRAMED rubric scores live on the 0-3 scale.
+import "./load-env.mjs";
 import { chromium } from "playwright";
 const LEVEL = (process.argv[2] || "senior").toLowerCase();
 const PROBLEM = process.argv[3] || "design-ui-test-framework";

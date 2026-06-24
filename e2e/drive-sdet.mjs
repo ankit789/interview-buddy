@@ -1,6 +1,7 @@
 // End-to-end SDET test-design interview: logs in, runs a strong senior-level
 // "how would you test a file upload API" conversation across all five phases,
 // then ends & evaluates. Confirms the TESTED rubric scores live on the 0-3 scale.
+import "./load-env.mjs";
 import { chromium } from "playwright";
 const LEVEL = (process.argv[2] || "senior").toLowerCase();
 const PROBLEM = process.argv[3] || "test-file-upload-api";

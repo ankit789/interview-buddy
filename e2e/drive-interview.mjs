@@ -6,6 +6,7 @@
 //   e.g.  node e2e/drive-interview.mjs staff rate-limiter http://127.0.0.1:4500
 //
 // Requires env EMAIL / PASSWORD (or edit defaults below).
+import "./load-env.mjs";
 import { chromium } from "playwright";
 import fs from "node:fs";
 
