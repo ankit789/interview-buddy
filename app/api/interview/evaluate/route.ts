@@ -156,10 +156,12 @@ export async function POST(req: Request) {
 
   const signalsRecord = { ...signals, capReason };
 
-  // The evaluator JSON omits per-dimension max; every RESHADED dimension is 0-2.
+  // The evaluator JSON omits per-dimension max; every dimension is scored 0-3.
+  // Stamping max explicitly keeps each record self-describing, so legacy 0-2 sessions
+  // and new 0-3 sessions both normalize correctly in analytics.
   const scores = ((evaluation.scores as { max?: number }[] | undefined) ?? []).map((s) => ({
     ...s,
-    max: typeof s.max === "number" ? s.max : 2,
+    max: typeof s.max === "number" ? s.max : 3,
   }));
 
   // Save evaluation

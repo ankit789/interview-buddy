@@ -44,7 +44,7 @@ Tone: precise, detail-oriented. You care about clean interfaces and proper encap
     { letter: "A", label: "API / Interface" },
     { letter: "E", label: "Extensibility" },
   ],
-  verdict: { notReadyMax: 4, borderlineMax: 7, maxTotal: 10 },
+  verdict: { notReadyMax: 6, borderlineMax: 11, maxTotal: 15 },
 
   buildEvaluatorIntro: (problem) =>
     `You are evaluating a Low-Level Design interview. Score the candidate on these dimensions.
@@ -53,9 +53,10 @@ Problem: "${problem.title}"
 
 The candidate may have written actual code in an editor — if a "[CANDIDATE'S CODE]" section appears below, treat that code as the primary artifact for "Class Design", "OOP Principles", and "API / Interface": judge the real classes, fields, methods, relationships, and interfaces they declared, not just how they described them in chat. Concrete, well-structured code is strong evidence; no code or only a vague verbal description is a gap.`,
 
-  scoringGuide: `Scoring guide:
+  scoringGuide: `Scoring guide (0-3 per dimension):
   0 = not addressed at all
-  1 = addressed adequately BUT only after the interviewer asked about it, OR addressed superficially
-  2 = the candidate PROACTIVELY raised this topic themselves AND addressed it thoroughly
-  IMPORTANT: A score of 2 requires the candidate to have brought up the topic independently.`,
+  1 = addressed only after the interviewer asked about it, OR addressed superficially
+  2 = SOLID (meets the bar): the candidate PROACTIVELY raised this AND addressed it with concrete, correct design
+  3 = EXCEPTIONAL (exceeds the bar): proactive AND deep — clean abstractions, edge-case and concurrency rigor, or extensibility insight beyond a merely working design
+  IMPORTANT: A score of 2 requires the candidate to have raised the topic independently. Reserve 3 for genuinely standout depth — do NOT give a 3 for a complete-but-ordinary answer.`,
 };

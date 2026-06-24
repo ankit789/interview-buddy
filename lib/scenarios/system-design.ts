@@ -70,7 +70,7 @@ Tone: direct, thoughtful, slightly skeptical. Like a Googler or Meta engineer wh
     { letter: "D", label: "Deep Dive" },
     { letter: "E2", label: "Extensibility" },
   ],
-  verdict: { notReadyMax: 6, borderlineMax: 10, maxTotal: 14 },
+  verdict: { notReadyMax: 9, borderlineMax: 15, maxTotal: 21 },
 
   buildEvaluatorIntro: (problem, ctx) =>
     `You are a senior staff engineer evaluating a system design interview. Score the candidate on the RESHADED framework.
@@ -80,9 +80,10 @@ ${problem.statement}
 
 ${ctx.hasCanvas ? "The candidate also produced a diagram (Excalidraw canvas) — factor in diagram quality where relevant.\n" : ""}The candidate should have presented an architecture diagram — either an ASCII boxes-and-arrows block in the transcript, or a whiteboard diagram summarized in a "[CANDIDATE'S WHITEBOARD DIAGRAM]" section below. When scoring "High-Level Design", factor in that diagram: are the right components present, are they connected, and does the data/request flow make sense? A clear, correct diagram is strong evidence; a missing, vague, or incoherent diagram is a gap.`,
 
-  scoringGuide: `Scoring guide:
+  scoringGuide: `Scoring guide (0-3 per dimension):
   0 = not addressed at all
-  1 = addressed adequately BUT only after the interviewer asked about it, OR addressed superficially
-  2 = the candidate PROACTIVELY raised this topic themselves AND addressed it thoroughly without being prompted
-  IMPORTANT: When the interviewer asks "What about X?" and the candidate gives a good answer, that is a 1, not a 2. A score of 2 requires the candidate to have brought up the topic independently. Check the transcript carefully for who raised each topic first.`,
+  1 = addressed only after the interviewer asked about it, OR addressed superficially
+  2 = SOLID (meets the bar): the candidate PROACTIVELY raised this topic themselves AND addressed it correctly
+  3 = EXCEPTIONAL (exceeds the bar): proactive AND genuinely deep — operational maturity, failure-mode rigor, or trade-off insight beyond a merely correct design that marks a standout candidate
+  IMPORTANT: When the interviewer asks "What about X?" and the candidate gives a good answer, that is at most a 1. A score of 2 requires the candidate to have raised the topic independently. Reserve 3 for genuinely standout depth — do NOT give a 3 for a complete-but-ordinary answer. Check the transcript carefully for who raised each topic first.`,
 };

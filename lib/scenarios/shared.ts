@@ -119,7 +119,7 @@ export function assembleEvalPrompt(
   const scoresJson = rubric
     .map(
       (d) =>
-        `    { "letter": "${d.letter}", "label": "${d.label}", "score": <0-2>, "evidence": "<one sentence from transcript>", "gap": "<what was missing or weak>" }`
+        `    { "letter": "${d.letter}", "label": "${d.label}", "score": <0-3>, "evidence": "<one sentence from transcript>", "gap": "<what was missing or weak>" }`
     )
     .join(",\n");
   const verdictGuide = `Verdict guide: 0-${verdict.notReadyMax} = Not Ready, ${

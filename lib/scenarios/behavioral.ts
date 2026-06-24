@@ -44,16 +44,17 @@ Tone: warm but probing. You are evaluating leadership principles, not just the s
     { letter: "R", label: "Result & Impact" },
     { letter: "L", label: "Leadership Signal" },
   ],
-  verdict: { notReadyMax: 4, borderlineMax: 7, maxTotal: 10 },
+  verdict: { notReadyMax: 6, borderlineMax: 11, maxTotal: 15 },
 
   buildEvaluatorIntro: (problem) =>
     `You are evaluating a behavioral interview using STAR format.
 
 Question theme: "${problem.title}"`,
 
-  scoringGuide: `Scoring guide:
+  scoringGuide: `Scoring guide (0-3 per dimension):
   0 = not addressed at all
-  1 = addressed adequately BUT only after the interviewer probed for it, OR addressed superficially
-  2 = the candidate PROACTIVELY offered this detail themselves AND it was thorough
-  IMPORTANT: A score of 2 requires the candidate to have volunteered the information independently.`,
+  1 = addressed only after the interviewer probed for it, OR addressed superficially
+  2 = SOLID (meets the bar): the candidate PROACTIVELY offered this detail themselves AND it was specific and complete
+  3 = EXCEPTIONAL (exceeds the bar): proactive, specific, and reflective — clear ownership, measurable impact, and genuine leadership insight that stands out
+  IMPORTANT: A score of 2 requires the candidate to have volunteered the detail independently. Reserve 3 for genuinely standout responses — do NOT give a 3 for a complete-but-ordinary answer.`,
 };
