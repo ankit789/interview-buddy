@@ -120,3 +120,44 @@ html.light ::-webkit-scrollbar-thumb {
 html.light ::-webkit-scrollbar-thumb:hover {
   background: oklch(0.68 0 0);
 }
+
+/* ── Motion system (Calibrated) ──
+   All entrance/affordance animation lives here so it can be disabled in one place
+   for users who ask for reduced motion. */
+@keyframes ib-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes ib-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ib-bar {
+  from { transform: scaleX(0); }
+}
+
+/* Staggered entrance — set `--ib-delay` inline to offset siblings. */
+.ib-reveal {
+  opacity: 0;
+  animation: ib-fade-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--ib-delay, 0ms);
+}
+
+/* Line draw-in for SVG paths that declare pathLength="1". */
+.ib-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ib-draw 1.15s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+}
+
+/* Bar fill grow — anchored left via transform so it stays compositor-friendly. */
+.ib-bar {
+  transform-origin: left center;
+  animation: ib-bar 0.85s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: var(--ib-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ib-reveal,
+  .ib-bar { animation: none; opacity: 1; transform: none; }
+  .ib-draw { animation: none; stroke-dashoffset: 0; }
+}
