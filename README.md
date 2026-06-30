@@ -8,6 +8,21 @@ An AI-powered mock-interview platform for senior-engineer prep. Run realistic **
 
 ---
 
+## Screenshots
+
+**Progress dashboard** — verdict tallies, score trend, dimension mastery, and recurring gaps.
+
+![Dashboard](docs/screenshots/dashboard.png)
+
+<table>
+<tr>
+<td width="50%"><b>Problem catalog</b><br/>Browse and filter across five interview types.<br/><img src="docs/screenshots/catalog.png" alt="Problem catalog" /></td>
+<td width="50%"><b>Rubric-scored results</b><br/>Per-dimension scores, what you nailed, and what you missed.<br/><img src="docs/screenshots/result.png" alt="Interview results" /></td>
+</tr>
+</table>
+
+---
+
 ## Features
 
 - **Five interview modes** — System Design (split chat + whiteboard), Low-Level Design (chat + code editor), Behavioral (STAR), and SDET Test/Framework Design.
