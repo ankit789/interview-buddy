@@ -4,6 +4,13 @@ import { useRef, useCallback, useState } from "react";
 import dynamic from "next/dynamic";
 import { Loader2, RefreshCw } from "lucide-react";
 import type { ExcalidrawElement, AppState } from "@/lib/excalidraw-types";
+import { useAppTheme } from "@/hooks/useAppTheme";
+
+// Canvas palette per theme. On dark we use Excalidraw's own dark canvas and a
+// light default stroke so freshly drawn shapes are visible (a black default
+// stroke vanishes on a dark canvas).
+const CANVAS_BG = { dark: "#121212", light: "#ffffff" } as const;
+const STROKE = { dark: "#e8e8e8", light: "#1e1e1e" } as const;
 
 const Excalidraw = dynamic(
   () => import("@excalidraw/excalidraw").then((mod) => mod.Excalidraw),
@@ -34,6 +41,7 @@ export function ExcalidrawPanel({
   const excalidrawRef = useRef<{ getSceneElements: () => readonly ExcalidrawElement[] } | null>(null);
   const saveTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [saved, setSaved] = useState(true);
+  const theme = useAppTheme();
 
   const saveCanvas = useCallback(
     async (elements: readonly ExcalidrawElement[], _appState: AppState) => {
@@ -48,7 +56,7 @@ export function ExcalidrawPanel({
               sessionId,
               canvasState: {
                 elements,
-                appState: { viewBackgroundColor: "#ffffff" },
+                appState: { viewBackgroundColor: CANVAS_BG[theme] },
               },
             }),
           });
@@ -58,7 +66,7 @@ export function ExcalidrawPanel({
         }
       }, 2000);
     },
-    [sessionId]
+    [sessionId, theme]
   );
 
   function handleGetFeedback() {
@@ -69,8 +77,8 @@ export function ExcalidrawPanel({
   const initialData = {
     elements: (initialCanvasState?.elements as ExcalidrawElement[]) ?? [],
     appState: {
-      viewBackgroundColor: "#ffffff",
-      currentStrokeColor: "#000000",
+      viewBackgroundColor: CANVAS_BG[theme],
+      currentStrokeColor: STROKE[theme],
       currentBackgroundColor: "transparent",
       // Default to rectangle tool
       activeTool: {
@@ -102,7 +110,7 @@ export function ExcalidrawPanel({
               }
             }}
             initialData={initialData as any}
-            theme="light"
+            theme={theme}
             onChange={saveCanvas as any}
             UIOptions={{
               canvasActions: {

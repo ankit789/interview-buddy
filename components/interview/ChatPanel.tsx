@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Send, Lightbulb, StopCircle, Loader2, ChevronDown, ChevronUp } from "lucide-react";
+import { Send, Lightbulb, StopCircle, Loader2, ChevronDown, ChevronUp, MessageSquare } from "lucide-react";
 import type { InterviewMessage } from "@/lib/types";
 import ReactMarkdown from "react-markdown";
 import { streamInterviewReply, endInterview } from "@/lib/interview-client";
@@ -147,17 +147,31 @@ export function ChatPanel({
       {/* Messages */}
       <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5 min-h-0">
         {messages.length === 0 && (
-          <div className="text-center py-12 text-muted-foreground text-sm">
-            Send a message to start the interview.
+          <div className="flex h-full flex-col items-center justify-center gap-3 py-12 text-center">
+            <div className="grid h-11 w-11 place-items-center rounded-full border border-border bg-card [box-shadow:inset_0_1px_0_0_oklch(1_0_0/0.05)]">
+              <MessageSquare className="h-4 w-4 text-primary" />
+            </div>
+            <div className="space-y-1">
+              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
+                Interview ready
+              </p>
+              <p className="mx-auto max-w-xs text-sm text-muted-foreground">
+                Open with a clarifying question or your first assumption to get started.
+              </p>
+            </div>
           </div>
         )}
         {messages.map((msg, i) => (
           <Message key={i} message={msg} />
         ))}
         {streaming && messages[messages.length - 1]?.content === "" && (
-          <div className="flex items-center gap-2 text-muted-foreground text-xs font-mono">
-            <Loader2 className="w-3 h-3 animate-spin" />
-            thinking…
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+            <span className="flex gap-1">
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary [animation-delay:-0.3s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary [animation-delay:-0.15s]" />
+              <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-primary" />
+            </span>
+            thinking
           </div>
         )}
         <div ref={bottomRef} />
@@ -182,19 +196,20 @@ export function ChatPanel({
             placeholder="Type your answer… (⌘+Enter to send)"
             rows={1}
             className={cn(
-              "flex-1 resize-none bg-input border border-border rounded-md px-3 py-2 text-sm",
-              "placeholder:text-muted-foreground outline-none focus:border-primary/60 transition-colors",
-              "disabled:opacity-50 min-h-[38px] max-h-[120px]"
+              "flex-1 resize-none rounded-lg border border-border bg-input px-3 py-2 text-sm",
+              "outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-primary/20",
+              "min-h-[38px] max-h-[120px] disabled:opacity-50"
             )}
           />
           <button
             onClick={() => sendMessage(input)}
             disabled={!input.trim() || streaming || ending}
+            aria-label="Send message"
             className={cn(
-              "w-9 h-9 flex items-center justify-center rounded-md border transition-colors shrink-0",
+              "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors",
               input.trim() && !streaming
-                ? "bg-primary text-primary-foreground border-primary hover:bg-primary/80"
-                : "border-border text-muted-foreground opacity-40 cursor-not-allowed"
+                ? "border-primary bg-primary text-primary-foreground hover:bg-primary/80"
+                : "cursor-not-allowed border-border text-muted-foreground opacity-40"
             )}
           >
             <Send className="w-4 h-4" />
@@ -252,13 +267,19 @@ function Message({ message }: { message: Msg }) {
   const isDiagramFeedback = message.message_type === "diagram_feedback";
 
   return (
-    <div className={cn("space-y-1", isUser && "pl-2")}>
+    <div className="space-y-1.5">
       <div className="flex items-center gap-2">
-        <span className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
+        <span
+          className={cn(
+            "h-1.5 w-1.5 rounded-full",
+            isUser ? "bg-muted-foreground/50" : isDiagramFeedback ? "bg-primary" : "bg-primary"
+          )}
+        />
+        <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
           {isUser ? "you" : isDiagramFeedback ? "diagram feedback" : "interviewer"}
         </span>
         {isDiagramFeedback && (
-          <span className="font-mono text-[10px] text-primary bg-primary/10 px-1.5 py-0.5 rounded">
+          <span className="rounded bg-primary/10 px-1.5 py-0.5 font-mono text-[10px] text-primary">
             canvas
           </span>
         )}
@@ -266,8 +287,10 @@ function Message({ message }: { message: Msg }) {
       <div
         className={cn(
           "text-sm leading-relaxed",
-          isUser ? "text-muted-foreground" : "text-foreground",
-          isDiagramFeedback && "text-primary/90 border-l-2 border-primary/30 pl-3"
+          isUser
+            ? "rounded-xl border border-border bg-muted/30 px-3 py-2 text-foreground/90"
+            : "text-foreground",
+          isDiagramFeedback && "rounded-xl border-l-2 border-primary/30 bg-primary/[0.04] px-3 py-2 text-primary/90"
         )}
       >
         {message.content ? (

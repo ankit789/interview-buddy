@@ -99,9 +99,10 @@ export function CodeEditorPanel({ sessionId, initialCodeState }: CodeEditorPanel
       const compartment = new Compartment();
       langCompartmentRef.current = compartment;
 
-      const isDark =
-        document.documentElement.classList.contains("dark") ||
-        window.matchMedia?.("(prefers-color-scheme: dark)").matches;
+      // The app is dark-first: dark unless an explicit `html.light` opt-in.
+      // (Previously checked a `.dark` class that the app never sets, so an
+      // OS-light user wrongly got a light editor inside the dark app.)
+      const isDark = !document.documentElement.classList.contains("light");
 
       const initialDoc = initialCodeState?.code ?? STARTERS[languageRef.current] ?? "";
 

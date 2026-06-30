@@ -1,24 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
 import type { Problem } from "@/lib/types";
 import { Clock, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const difficultyColor: Record<string, string> = {
-  Easy: "text-[oklch(0.68_0.18_145)] border-[oklch(0.68_0.18_145)]/30",
-  Medium: "text-[oklch(0.75_0.18_80)] border-[oklch(0.75_0.18_80)]/30",
-  Hard: "text-[oklch(0.65_0.20_25)] border-[oklch(0.65_0.20_25)]/30",
-};
-
-const typeLabel: Record<string, string> = {
-  system_design: "SD",
-  lld: "LLD",
-  behavioral: "BEH",
-  sdet_test_design: "SDET",
-  sdet_framework_design: "SDET FW",
-};
+import { DIFFICULTY_PILL, TYPE_LABEL } from "@/lib/ui-tokens";
 
 interface ProblemCardProps {
   problem: Problem;
@@ -29,48 +15,50 @@ export function ProblemCard({ problem, featured }: ProblemCardProps) {
   return (
     <Link
       href={`/interview/new?problem=${problem.id}`}
+      prefetch={false}
       className={cn(
-        "group relative flex flex-col gap-3 rounded-lg border border-border bg-card p-4",
-        "hover:border-primary/40 hover:bg-card/80 transition-all duration-150",
+        "group relative flex flex-col gap-3 rounded-2xl border border-border bg-card p-4 transition-all duration-200",
+        "[box-shadow:inset_0_1px_0_0_oklch(1_0_0/0.05)]",
+        "hover:-translate-y-0.5 hover:border-primary/40 hover:bg-muted/30",
         featured && "border-primary/20"
       )}
     >
-      {/* Type chip */}
+      {/* Type + difficulty */}
       <div className="flex items-center justify-between">
-        <span className="font-mono text-[10px] text-muted-foreground tracking-widest uppercase">
-          {typeLabel[problem.type]}
+        <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+          {TYPE_LABEL[problem.type] ?? problem.type}
         </span>
         <span
           className={cn(
-            "font-mono text-[10px] tracking-wider border rounded px-1.5 py-0.5",
-            difficultyColor[problem.difficulty]
+            "rounded border px-1.5 py-0.5 font-mono text-[10px] tracking-wider",
+            DIFFICULTY_PILL[problem.difficulty]
           )}
         >
           {problem.difficulty}
         </span>
       </div>
 
-      {/* Title */}
+      {/* Title + description */}
       <div>
-        <h3 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors line-clamp-2">
+        <h3 className="line-clamp-2 text-sm font-semibold leading-snug transition-colors group-hover:text-primary">
           {problem.title}
         </h3>
-        <p className="mt-1 text-xs text-muted-foreground line-clamp-2 leading-relaxed">
+        <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
           {problem.description}
         </p>
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between mt-auto pt-1">
+      <div className="mt-auto flex items-center justify-between pt-1">
         <div className="flex items-center gap-1 text-muted-foreground">
-          <Clock className="w-3 h-3" />
-          <span className="text-xs font-mono">{problem.timeMinutes}m</span>
+          <Clock className="h-3 w-3" />
+          <span className="font-mono text-xs tabular-nums">{problem.timeMinutes}m</span>
         </div>
         <div className="flex items-center gap-1">
           {problem.companies.slice(0, 2).map((c) => (
             <span
               key={c}
-              className="text-[10px] font-mono text-muted-foreground bg-muted px-1.5 py-0.5 rounded"
+              className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground"
             >
               {c}
             </span>
@@ -78,8 +66,7 @@ export function ProblemCard({ problem, featured }: ProblemCardProps) {
         </div>
       </div>
 
-      {/* Hover arrow */}
-      <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+      <ChevronRight className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-primary opacity-0 transition-opacity group-hover:opacity-100" />
     </Link>
   );
 }

@@ -63,44 +63,54 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-sm space-y-8">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden px-4">
+      {/* Ambient accent glow */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/3 h-[28rem] w-[28rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-[0.18] blur-3xl"
+        style={{ background: "radial-gradient(circle, oklch(0.68 0.18 250), transparent 70%)" }}
+      />
+
+      <div className="ib-reveal relative w-full max-w-sm">
         {/* Logo */}
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center">
+        <div className="mb-6 space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary [box-shadow:0_0_20px_-4px_oklch(0.68_0.18_250/0.6)]">
               <span className="font-mono text-sm font-bold text-primary-foreground">ib</span>
             </div>
-            <span className="font-mono text-sm text-muted-foreground tracking-widest uppercase">
+            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
               interview-buddy
             </span>
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight">
-            {mode === "signin" ? "Sign in to practice" : "Create an account"}
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            AI-powered mock interviews for FAANG prep.
-          </p>
+          <div className="space-y-1.5">
+            <h1 className="text-2xl font-semibold tracking-tight">
+              {mode === "signin" ? "Sign in to practice" : "Create an account"}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              AI-powered mock interviews for FAANG prep.
+            </p>
+          </div>
         </div>
 
-        {/* Google */}
-        <div className="space-y-4">
+        {/* Card */}
+        <div className="space-y-4 rounded-2xl border border-border bg-card p-6 [box-shadow:inset_0_1px_0_0_oklch(1_0_0/0.05)]">
           <button
             onClick={signInWithGoogle}
             disabled={googleLoading || loading}
-            className="w-full h-11 flex items-center justify-center gap-2 font-medium text-sm border border-border rounded-md bg-secondary hover:bg-secondary/70 transition-colors disabled:opacity-50"
+            className="flex h-11 w-full items-center justify-center gap-2 rounded-lg border border-border bg-secondary text-sm font-medium transition-colors hover:bg-secondary/70 disabled:opacity-50"
           >
             <GoogleIcon />
             {googleLoading ? "Redirecting…" : "Continue with Google"}
           </button>
 
           <div className="flex items-center gap-3">
-            <div className="flex-1 h-px bg-border" />
-            <span className="text-xs text-muted-foreground">or</span>
-            <div className="flex-1 h-px bg-border" />
+            <div className="h-px flex-1 bg-border" />
+            <span className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+              or
+            </span>
+            <div className="h-px flex-1 bg-border" />
           </div>
 
-          {/* Email form */}
           <form onSubmit={handleEmail} className="space-y-3">
             <input
               type="email"
@@ -109,8 +119,8 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               required
               className={cn(
-                "w-full h-10 px-3 text-sm bg-input border border-border rounded-md",
-                "placeholder:text-muted-foreground outline-none focus:border-primary/60 transition-colors"
+                "h-10 w-full rounded-lg border border-border bg-input px-3 text-sm",
+                "outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-primary/20"
               )}
             />
             <input
@@ -121,14 +131,14 @@ export default function LoginPage() {
               required
               minLength={6}
               className={cn(
-                "w-full h-10 px-3 text-sm bg-input border border-border rounded-md",
-                "placeholder:text-muted-foreground outline-none focus:border-primary/60 transition-colors"
+                "h-10 w-full rounded-lg border border-border bg-input px-3 text-sm",
+                "outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/60 focus:ring-2 focus:ring-primary/20"
               )}
             />
             <button
               type="submit"
               disabled={loading || googleLoading || !email.trim() || !password.trim()}
-              className="w-full h-10 text-sm font-medium bg-primary text-primary-foreground rounded-md hover:bg-primary/80 transition-colors disabled:opacity-50"
+              className="h-10 w-full rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80 disabled:opacity-50"
             >
               {loading
                 ? mode === "signup"
@@ -140,10 +150,17 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <p className="text-sm text-center text-muted-foreground">
+          {error && <p className="text-center text-sm text-destructive">{error}</p>}
+          {info && <p className="text-center text-sm text-primary">{info}</p>}
+
+          <p className="text-center text-sm text-muted-foreground">
             {mode === "signin" ? "No account? " : "Already have one? "}
             <button
-              onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setError(null); setInfo(null); }}
+              onClick={() => {
+                setMode(mode === "signin" ? "signup" : "signin");
+                setError(null);
+                setInfo(null);
+              }}
               className="text-primary hover:underline"
             >
               {mode === "signin" ? "Sign up" : "Sign in"}
@@ -151,14 +168,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {error && (
-          <p className="text-sm text-destructive text-center">{error}</p>
-        )}
-        {info && (
-          <p className="text-sm text-primary text-center">{info}</p>
-        )}
-
-        <p className="text-xs text-muted-foreground text-center">
+        <p className="mt-6 text-center font-mono text-[10px] text-muted-foreground/70">
           By signing in you agree to use this responsibly.
         </p>
       </div>

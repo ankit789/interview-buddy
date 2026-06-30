@@ -140,7 +140,7 @@ export function ProblemGrid({ problems, companies }: ProblemGridProps) {
           </button>
         )}
 
-        <span className="ml-auto font-mono text-xs text-muted-foreground">
+        <span className="ml-auto font-mono text-xs tabular-nums text-muted-foreground">
           {filtered.length} problems
         </span>
       </div>
@@ -151,7 +151,7 @@ export function ProblemGrid({ problems, companies }: ProblemGridProps) {
           No problems match your filters.
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filtered.map((p) => (
             <ProblemCard key={p.id} problem={p} />
           ))}
