@@ -45,3 +45,6 @@ next-env.d.ts
 
 # e2e screenshot artifacts
 e2e/*.png
+
+# personal / local-only notes (never committed)
+.personal/
